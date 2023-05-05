@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="assets/styles/Styles.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<main class="myMane">
+    <h1>Place Order</h1>
+    <form class="row g-3" id="myform">
+        <div class="row col-12">
+            <div class="col-3">
+                <label class="form-label">Order ID</label>
+                <label class="form-control">MD-OOO1</label>
+            </div>
+            <div class="col-3">
+                <label class="form-label">Date</label>
+                <label class="form-control" id="date"></label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Customer ID</label>
+            <select id="cusID" class="form-select">
+                <option selected>Choose...</option>
+                <option>...</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Name</label>
+            <label class="form-control">&nbsp;</label>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Address</label>
+            <label class="form-control">&nbsp;</label>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Contact</label>
+            <label class="form-control">&nbsp;</label>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Item Code</label>
+            <select id="itemCode" class="form-select">
+                <option selected>Choose...</option>
+                <option>...</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Description</label>
+            <label class="form-control">&nbsp;</label>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Qty On Hand</label>
+            <label class="form-control">&nbsp;</label>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Unit Price</label>
+            <label class="form-control">&nbsp;</label>
+        </div>
+        <div class="col-md-5">
+            <label class="form-label">Qty</label>
+            <div class="row">
+                <div class="col-md-6" id="divQty">
+                    <input type="text" class="form-control" id="qty">
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <table class="table">
+        <thead>
+        <th>Item Code</th>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>unit Price</th>
+        <th>Total</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+        </tr>
+        <tr>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+        </tr>
+        <tr>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+            <td>aawdwad</td>
+        </tr>
+        </tbody>
+    </table>
+    <form class="row p-5">
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary w-25 position-absolute end-0 me-4 bg-success">Place Order</button>
+        </div>
+    </form>
+</main>
+<script src="assets/lib/jquery-3.6.4.min.js"></script>
+<script>
+    let n = new Date();
+    let y = n.getFullYear();
+    let m = n.getMonth() + 1;
+    let d = n.getDate();
+    $('#date').text(m + "/" + d + "/" + y);
+</script>
+</body>
+</html>

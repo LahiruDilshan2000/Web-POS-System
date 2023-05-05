@@ -1,0 +1,162 @@
+body{
+    margin: 0;
+    background-color: #dfe4ea !important;
+}
+main{
+    display: flex;
+    padding-top: 10px;
+    height: fit-content;
+}
+.template{
+    display: block;
+
+}
+header > div{
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    position: relative;
+    box-shadow: 0mm 0mm 8px #b2bec3 ;
+
+}
+header > div > h1{
+    color: #485460;
+}
+header > div > h1{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    margin: auto;
+    height: fit-content;
+}
+aside{
+    width: 20%;
+    height:  80vh;
+    position: fixed;
+}
+nav{
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+aside > nav a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #485460;
+    width: 88%;
+    height: 50px;
+    display: inline-block;
+    border-radius: 4px;
+    margin-left: 15px;
+    margin-bottom: 6px;
+    margin-top: 10px;
+    position: relative;
+
+}
+i{
+    margin-right: 10px;
+    margin-left: 20px;
+}
+span{
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: 10px;
+}
+aside > nav ul li {
+    text-decoration: none;
+    display: block;
+    position: relative;
+}
+aside > nav > ul{
+    padding:0;
+}
+
+a:hover{
+    background-color: #7f8fa6;
+    color: white !important;
+    box-shadow: 2px 2px 8px gray;
+}
+main > div {
+    margin-left: 5px;
+    margin-right: 5px;
+    width:79%;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0.5mm 0.5mm 8px #b2bec3;
+    position: absolute;
+    right: 0;
+}
+a:focus{
+    background-color: #0652DD;
+    color: white;
+    box-shadow: 2px 2px 8px gray;
+}
+.btn{
+    width: 75px;
+}
+#myform{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 20px;
+    border: 0.5px solid #CFCFCF;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    box-shadow: 0mm 0mm 8px #E4E4E4;
+}
+.myMane{
+    padding: 20px;
+    display: block;
+}
+table{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 0.5px solid #CFCFCF;
+    box-shadow: 0mm 0mm 8px #E4E4E4;
+    padding: 10px;
+}
+main > h1 {
+   margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #485460;
+}
+#search{
+    width: 250px !important;
+    margin-left: 10px;
+}
+@media all and (max-width:800px) {
+    aside{
+        display: none;
+    }
+    main > div {
+        position: static;
+        width: 100%;
+
+    }
+    #search{
+        width: 150px !important;
+    }
+    .d-grid{
+        display: flex !important;
+    }
+    #myform{
+        margin-right: 0;
+        margin-left: 0;
+    }
+    #divQty{
+        width: 30%;
+    }
+}

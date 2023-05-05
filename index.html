@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Point of Sale</title>
+    <link rel="icon" type="image/x-icone" href="../assets/icons/icons8-monitor-64.ico">
+    <link rel="stylesheet" href="assets/styles/Styles.css">
+    <link rel="stylesheet" href="assets/fontsAwesome/css/all.css">
+</head>
+<body>
+<header>
+    <div><h1><i class="fa-solid fa-sleigh"></i> My POS System</h1></div>
+</header>
+<main>
+    <aside>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="loadHtmlFile('dashboard')"><span><i class="fa-solid fa-house"></i>DashBoard</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('customer')"><span><i class="fa-solid fa-user"></i> Customer</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('item')"><span><i class="fa-solid fa-layer-group"></i>Item</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('order')"><span><i class="fa-solid fa-bag-shopping"></i>Order</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="template" class="template">
+    </div>
+</main>
+<script src="assets/lib/jquery-3.6.4.min.js"></script>
+<script>
+    function loadHtmlFile(file) {
+        $('#template').load(file + '.html');
+    }
+</script>
+</body>
+</html>
