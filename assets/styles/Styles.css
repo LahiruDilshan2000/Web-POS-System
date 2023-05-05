@@ -1,28 +1,33 @@
-body{
+body {
     margin: 0;
     background-color: #dfe4ea !important;
 }
-main{
+
+main {
     display: flex;
     padding-top: 10px;
     height: fit-content;
 }
-.template{
+
+.template {
     display: block;
 
 }
-header > div{
+
+header > div {
     width: 100%;
     height: 80px;
     background-color: white;
     position: relative;
-    box-shadow: 0mm 0mm 8px #b2bec3 ;
+    box-shadow: 0mm 0mm 8px #b2bec3;
 
 }
-header > div > h1{
+
+header > div > h1 {
     color: #485460;
 }
-header > div > h1{
+
+header > div > h1 {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -30,12 +35,14 @@ header > div > h1{
     margin: auto;
     height: fit-content;
 }
-aside{
+
+aside {
     width: 20%;
-    height:  80vh;
+    height: 80vh;
     position: fixed;
 }
-nav{
+
+nav {
     width: 100%;
     height: fit-content;
     position: absolute;
@@ -58,11 +65,13 @@ aside > nav a {
     position: relative;
 
 }
-i{
+
+i {
     margin-right: 10px;
     margin-left: 20px;
 }
-span{
+
+span {
     height: fit-content;
     position: absolute;
     top: 0;
@@ -70,39 +79,45 @@ span{
     margin: auto;
     left: 10px;
 }
+
 aside > nav ul li {
     text-decoration: none;
     display: block;
     position: relative;
 }
-aside > nav > ul{
-    padding:0;
+
+aside > nav > ul {
+    padding: 0;
 }
 
-a:hover{
-    background-color: #7f8fa6;
+a:hover {
+    background-color: #7f8fa6 !important;
     color: white !important;
     box-shadow: 2px 2px 8px gray;
 }
+
 main > div {
     margin-left: 5px;
     margin-right: 5px;
-    width:79%;
+    width: 79%;
     border-radius: 10px;
     background-color: white;
     box-shadow: 0.5mm 0.5mm 8px #b2bec3;
     position: absolute;
     right: 0;
 }
-a:focus{
-    background-color: #0652DD;
+
+a:focus {
+    /*background-color: #0652DD;
     color: white;
-    box-shadow: 2px 2px 8px gray;
+    box-shadow: 2px 2px 8px gray;*/
 }
-.btn{
+
+.btn {
     width: 75px;
 }
-#myform{
+
+#myform {
     margin-top: 10px;
     margin-left: 50px;
     margin-right: 50px;
@@ -114,49 +129,121 @@ a:focus{
     padding-bottom: 20px;
     box-shadow: 0mm 0mm 8px #E4E4E4;
 }
-.myMane{
+
+.myMane {
     padding: 20px;
     display: block;
 }
-table{
-    margin-left: 10px;
-    margin-right: 10px;
+
+table {
     margin-bottom: 20px;
     border-radius: 10px;
     border: 0.5px solid #CFCFCF;
     box-shadow: 0mm 0mm 8px #E4E4E4;
     padding: 10px;
 }
+
 main > h1 {
-   margin-left: 10px;
+    margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
     color: #485460;
 }
-#search{
+
+#search {
     width: 250px !important;
     margin-left: 10px;
 }
-@media all and (max-width:800px) {
-    aside{
+
+.dashMane {
+    display: block;
+    width: 100%;
+}
+
+.dash {
+    width: 100%;
+    position: static;
+}
+
+.dash > div {
+    padding: 20px;
+}
+
+.dash > div > div {
+    width: 100%;
+    height: 150px;
+    border-radius: 20px;
+    border: 0.5px solid #CFCFCF;
+    box-shadow: 1mm 1mm 8px #c8d6e5;
+    color: #485460;
+    position: relative;
+}
+
+.dash > div > div > h5{
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.dash > div > div > h6 {
+    font-size: 22px;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.mytext{
+    height: fit-content;
+}
+.dashMane > section > div > h2{
+    color: #485460;
+}
+.dashMane > section > div:first-child > div{
+    background-color: #ff3838;
+}
+.dashMane > section > div:nth-child(2) > div{
+    background-color: #2e86de;
+}
+.dashMane > section > div:nth-child(3) > div{
+    background-color: #1e3799;
+}
+.dashMane > section > div:nth-child(4) > div{
+    background-color: #38ada9;
+}
+@media all and (max-width: 910px) {
+    aside {
         display: none;
     }
+
     main > div {
         position: static;
         width: 100%;
 
     }
-    #search{
+
+    #search {
         width: 150px !important;
     }
-    .d-grid{
+
+    .d-grid {
         display: flex !important;
     }
-    #myform{
+
+    #myform {
         margin-right: 0;
         margin-left: 0;
     }
-    #divQty{
+
+    #divQty {
         width: 30%;
     }
 }

@@ -15,10 +15,16 @@
     <aside>
         <nav>
             <ul>
-                <li><a href="#" onclick="loadHtmlFile('dashboard')"><span><i class="fa-solid fa-house"></i>DashBoard</span></a></li>
-                <li><a href="#" onclick="loadHtmlFile('customer')"><span><i class="fa-solid fa-user"></i> Customer</span></a></li>
-                <li><a href="#" onclick="loadHtmlFile('item')"><span><i class="fa-solid fa-layer-group"></i>Item</span></a></li>
-                <li><a href="#" onclick="loadHtmlFile('order')"><span><i class="fa-solid fa-bag-shopping"></i>Order</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('dashboard', 'dash')" id="dash"><span><i
+                        class="fa-solid fa-house"></i>DashBoard</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('customer', 'cus')" id="cus"><span><i
+                        class="fa-solid fa-user"></i> Customer</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('item', 'itm')" id="itm"><span><i
+                        class="fa-solid fa-layer-group"></i>Item</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('order', 'ors')" id="ors"><span><i
+                        class="fa-solid fa-bag-shopping"></i>Order</span></a></li>
+                <li><a href="#" onclick="loadHtmlFile('orderDetails', 'orsde')" id="orsde"><span><i
+                        class="fa-solid fa-bars-staggered"></i>Order Details</span></a></li>
             </ul>
         </nav>
     </aside>
@@ -28,10 +34,31 @@
 <script src="assets/lib/jquery-3.6.4.min.js"></script>
 <script>
 
-    loadHtmlFile('dashboard');
+    var oldBtn ;
 
-    function loadHtmlFile(file) {
+    loadHtmlFile('dashboard', 'dash');
+
+    function loadHtmlFile(file, id) {
+        setStyle(id);
         $('#template').load(file + '.html');
+        oldBtn = id;
+    }
+
+    function setStyle(id) {
+
+        if (oldBtn != undefined){
+            $('#' + oldBtn).css({
+                background: "#dfe4ea",
+                color: "#485460",
+                boxShadow : "none"
+            });
+        }
+
+        $('#' + id).css({
+            background: "#0652DD",
+            color: "white",
+            boxShadow : "2px 2px 8px gray"
+        });
     }
 </script>
 </body>
