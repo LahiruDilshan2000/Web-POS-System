@@ -12,24 +12,24 @@
     <form class="row g-3" id="myform">
         <div class="col-md-6">
             <label class="form-label">Customer ID</label>
-            <input type="text" class="form-control" id="id">
+            <input type="text" name="id" class="form-control" id="id">
         </div>
         <div class="col-md-6">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control" id="name">
+            <input type="text" name="name" class="form-control" id="name">
         </div>
         <div class="col-12">
             <label class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="1234 Main St">
+            <input type="text" name="address" class="form-control" id="address" placeholder="1234 Main St">
         </div>
         <div class="col-12">
             <label class="form-label">Contact </label>
-            <input type="tel" class="form-control" id="tel" placeholder="+94 xxx xxxx">
+            <input type="tel" name="tel" class="form-control" id="tel" placeholder="+94 xxx xxxx">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="submit" class="btn btn-primary bg-info border-info">Update</button>
-            <button type="submit" class="btn btn-primary bg-danger border-danger">Delete</button>
+            <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+            <button type="submit" class="btn btn-primary bg-info border-info" id="updateBtn">Update</button>
+            <button type="submit" class="btn btn-primary bg-danger border-danger" id="deleteBtn">Delete</button>
         </div>
     </form>
     <br>
@@ -41,7 +41,7 @@
     <br>
 
     <form class="row g-3 p-2">
-        <table class="table">
+        <table class="table" id="tbl">
             <thead>
             <th>Customer ID</th>
             <th>Customer Name</th>
@@ -49,27 +49,126 @@
             <th>Customer Contact</th>
             </thead>
             <tbody>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
             </tbody>
         </table>
     </form>
 </main>
 </body>
+<script src="../assets/lib/jquery-3.6.4.min.js"></script>
+<script>
+
+
+
+    const data = "DATA";
+
+//------------add new object into the localStorage---------------------------
+
+    $('#saveBtn').on('click', () => {
+
+        let arr= getLocalSData();
+        arr.push(initObj());
+        localStorage.setItem(data, JSON.stringify(arr));
+    });
+
+//----------------get localStorage array-------------------------------
+
+    function getLocalSData(){
+
+        let pre_data = localStorage.getItem(data);
+        let data_array = [];
+        if(pre_data){
+            data_array = JSON.parse(pre_data);
+        }
+        return data_array;
+    }
+
+//--------------create obj using textField data----------------------------
+
+    function initObj(){
+        return   {
+            customer_id : $('#id').val(),
+            customer_name :$('#name').val(),
+            customer_address : $('#address').val(),
+            customer_tel : $('#tel').val()
+        }
+    }
+
+//-------------------load table data-------------------------------
+
+    function loadData(){
+
+        let per_data = localStorage.getItem(data);
+
+        let  customer_data_arr = JSON.parse(per_data);
+
+        customer_data_arr .map((value, index) => {
+
+            var row = "<tr name = 'index'>" +
+                "<td>"+ value.customer_id +"</td>" +
+                "<td>"+ value.customer_name +"</td>" +
+                "<td>"+ value.customer_address +"</td>" +
+                "<td>"+ value.customer_tel +"</td>" +
+                "</tr>";
+
+            $('tbody').append(row);
+
+            //---------------add table row with other way----------------------
+
+            /*var tr=  document.createElement('tr');
+
+            var td1 = tr.appendChild(document.createElement('td'));
+            var td2 = tr.appendChild(document.createElement('td'));
+            var td3 = tr.appendChild(document.createElement('td'));
+            var td4 = tr.appendChild(document.createElement('td'));
+
+            td1.innerHTML=value.customer_id;
+            td2.innerHTML=value.customer_name;
+            td3.innerHTML=value.customer_address;
+            td4.innerHTML=value.customer_tel;
+
+            document.getElementById("tbl").appendChild(tr);*/
+        });
+    }
+
+    loadData();
+
+//---------------add table row click event listener-------------------------
+
+    var arrIndex;
+
+    $(document).ready(() => {
+        $('table  tbody  tr').on('click', (event) => {
+             $('#id').val(event.currentTarget.cells[0].innerText)
+             $('#name').val(event.currentTarget.cells[1].innerText)
+             $('#address').val(event.currentTarget.cells[2].innerText)
+             $('#tel').val(event.currentTarget.cells[3].innerText)
+            arrIndex = event.currentTarget.sectionRowIndex;
+
+        });
+    });
+
+//-----------------update data in localStorage-------------------------------
+
+    $('#updateBtn').on('click', () => {
+
+        let cus_arr = getLocalSData();
+
+        cus_arr[arrIndex] = initObj();
+        localStorage.setItem(data, JSON.stringify(cus_arr));
+
+    });
+
+//----------------------delete data in localStorage------------------------------
+
+    $('#deleteBtn').on('click', () => {
+
+        let cus_arr = getLocalSData();
+
+        cus_arr.splice(arrIndex, 1);
+
+        localStorage.setItem(data, JSON.stringify(cus_arr));
+
+    });
+
+</script>
 </html>

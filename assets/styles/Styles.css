@@ -247,3 +247,9 @@ main > h1 {
         width: 30%;
     }
 }
+#tbl > tbody > tr {
+    cursor: pointer;
+}
+#tbl > tbody > tr:hover {
+    background: darkgrey;
+}
