@@ -27,9 +27,9 @@
             <input type="tel" name="tel" class="form-control" id="tel" placeholder="+94 xxx xxxx">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
-            <button type="submit" class="btn btn-primary bg-info border-info" id="updateBtn">Update</button>
-            <button type="submit" class="btn btn-primary bg-danger border-danger" id="deleteBtn">Delete</button>
+            <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+            <button type="button" class="btn btn-primary bg-info border-info" id="updateBtn">Update</button>
+            <button type="button" class="btn btn-primary bg-danger border-danger" id="deleteBtn">Delete</button>
         </div>
     </form>
     <br>
@@ -53,24 +53,38 @@
         </table>
     </form>
 </main>
-</body>
 <script src="../assets/lib/jquery-3.6.4.min.js"></script>
 <script>
 
-
-
     const data = "DATA";
+    var arrIndex = -1; // index of selected object
 
-//------------add new object into the localStorage---------------------------
+    //------------add new object into the localStorage---------------------------
 
     $('#saveBtn').on('click', () => {
 
         let arr= getLocalSData();
-        arr.push(initObj());
-        localStorage.setItem(data, JSON.stringify(arr));
+
+        isExistsById(arr) === true  ? alert("Customer ID all ready exists !") :
+            arr.push(initObj()),localStorage.setItem(data, JSON.stringify(arr));
+        loadData();
+        clearData();
     });
 
-//----------------get localStorage array-------------------------------
+    //--------check customer_id all ready exists --------------------------
+
+    function isExistsById(arr){
+        let flag = false;
+        arr.filter((event) => {
+            if (event.customer_id === $('#id').val()){
+                flag = true;
+            }
+        });
+        return flag;
+    }
+
+
+    //----------------get localStorage array-------------------------------
 
     function getLocalSData(){
 
@@ -82,7 +96,7 @@
         return data_array;
     }
 
-//--------------create obj using textField data----------------------------
+    //--------------create obj using textField data----------------------------
 
     function initObj(){
         return   {
@@ -93,17 +107,17 @@
         }
     }
 
-//-------------------load table data-------------------------------
+    //-------------------load table data-------------------------------
 
     function loadData(){
 
         let per_data = localStorage.getItem(data);
 
+        /*$('table tbody tr td').remove();*/
+
         let  customer_data_arr = JSON.parse(per_data);
-
-        customer_data_arr .map((value, index) => {
-
-            var row = "<tr name = 'index'>" +
+        customer_data_arr.map((value) => {
+            var row = "<tr>" +
                 "<td>"+ value.customer_id +"</td>" +
                 "<td>"+ value.customer_name +"</td>" +
                 "<td>"+ value.customer_address +"</td>" +
@@ -132,43 +146,67 @@
 
     loadData();
 
-//---------------add table row click event listener-------------------------
-
-    var arrIndex;
+    //---------------add table row click event listener-------------------------
 
     $(document).ready(() => {
         $('table  tbody  tr').on('click', (event) => {
-             $('#id').val(event.currentTarget.cells[0].innerText)
-             $('#name').val(event.currentTarget.cells[1].innerText)
-             $('#address').val(event.currentTarget.cells[2].innerText)
-             $('#tel').val(event.currentTarget.cells[3].innerText)
+            console.log("dwdwad")
+            $('#id').val(event.currentTarget.cells[0].innerText)
+            $('#name').val(event.currentTarget.cells[1].innerText)
+            $('#address').val(event.currentTarget.cells[2].innerText)
+            $('#tel').val(event.currentTarget.cells[3].innerText)
             arrIndex = event.currentTarget.sectionRowIndex;
 
+            document.getElementById('saveBtn').disabled = true;
+            document.getElementById('id').disabled = true;
         });
     });
 
-//-----------------update data in localStorage-------------------------------
+    //-----------------update data in localStorage-------------------------------
 
     $('#updateBtn').on('click', () => {
 
+        console.log(arrIndex)
+        if (arrIndex < 0){
+            alert("Please save the new customer before update !");
+            return;
+        }
         let cus_arr = getLocalSData();
 
         cus_arr[arrIndex] = initObj();
         localStorage.setItem(data, JSON.stringify(cus_arr));
-
+        loadData();
+        clearData();
+        arrIndex = -1;
+        /*document.location.preload;*/
     });
 
-//----------------------delete data in localStorage------------------------------
+    //----------------------delete data in localStorage------------------------------
 
     $('#deleteBtn').on('click', () => {
 
+        if (arrIndex < 0){
+            alert("Please save the new customer before delete !");
+            return;
+        }
         let cus_arr = getLocalSData();
 
         cus_arr.splice(arrIndex, 1);
-
         localStorage.setItem(data, JSON.stringify(cus_arr));
-
+        loadData();
+        clearData();
+        arrIndex = -1;
     });
+    //-----------------------clear function-----------------------------------
 
+    function clearData(){
+        $('#id').val("");
+        $('#name').val("");
+        $('#address').val("");
+        $('#tel').val("");
+        document.getElementById('id').disabled = false;
+        document.getElementById('saveBtn').disabled = false;
+    }
 </script>
+</body>
 </html>

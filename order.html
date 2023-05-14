@@ -22,41 +22,39 @@
         </div>
         <div class="col-md-2">
             <label class="form-label">Customer ID</label>
-            <select id="cusID" class="form-select">
+            <select id="customerCmb" class="form-select">
                 <option selected>Choose...</option>
-                <option>...</option>
             </select>
         </div>
         <div class="col-md-3">
             <label class="form-label">Name</label>
-            <label class="form-control">&nbsp;</label>
+            <label class="form-control" id="customer_name">&nbsp;</label>
         </div>
         <div class="col-md-4">
             <label class="form-label">Address</label>
-            <label class="form-control">&nbsp;</label>
+            <label class="form-control" id="customer_address">&nbsp;</label>
         </div>
         <div class="col-md-3">
             <label class="form-label">Contact</label>
-            <label class="form-control">&nbsp;</label>
+            <label class="form-control" id="customer_contact">&nbsp;</label>
         </div>
         <div class="col-md-2">
             <label class="form-label">Item Code</label>
-            <select id="itemCode" class="form-select">
+            <select id="itemCodeCmb" class="form-select">
                 <option selected>Choose...</option>
-                <option>...</option>
             </select>
         </div>
         <div class="col-md-4">
             <label class="form-label">Description</label>
-            <label class="form-control">&nbsp;</label>
+            <label class="form-control" id="des">&nbsp;</label>
         </div>
         <div class="col-md-3">
             <label class="form-label">Qty On Hand</label>
-            <label class="form-control">&nbsp;</label>
+            <label class="form-control" id="qty_on_hand">&nbsp;</label>
         </div>
         <div class="col-md-3">
             <label class="form-label">Unit Price</label>
-            <label class="form-control">&nbsp;</label>
+            <label class="form-control" id="unit_price">&nbsp;</label>
         </div>
         <div class="col-md-5">
             <label class="form-label">Qty</label>
@@ -65,43 +63,23 @@
                     <input type="text" class="form-control" id="qty">
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-primary" id="addBtn">Add</button>
                 </div>
             </div>
         </div>
     </form>
     <br>
     <form class="row g-3 p-2">
-        <table class="table">
+        <table class="table" id="tbl">
             <thead>
             <th>Item Code</th>
             <th>Description</th>
-            <th>Qty</th>
+            <th>Qty On Hand</th>
             <th>unit Price</th>
+            <th>Qty</th>
             <th>Total</th>
             </thead>
             <tbody>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
             </tbody>
         </table>
     </form>
@@ -118,6 +96,97 @@
     let m = n.getMonth() + 1;
     let d = n.getDate();
     $('#date').text(m + "/" + d + "/" + y);
+
+    let order = "ORDER"
+    let item = "ITEM";
+    let customer = "DATA";
+    let item_arr = [];
+    let customer_arr = [];
+    let cus ;
+    let itm ;
+    let order_item_arr = [] ;
+
+        $(document).ready(() => {
+
+         item_arr = getLocalSData(item);
+         customer_arr = getLocalSData(customer);
+
+        item_arr.map( (value) => {
+            var opt = "<option>"+value.item_code+"</option>"
+            $('#itemCodeCmb').append(opt);
+        });
+
+        customer_arr.map( (value) => {
+            var opt = "<option>"+value.customer_id+"</option>"
+            $('#customerCmb').append(opt);
+        });
+    });
+
+    function getLocalSData(key){
+
+        let pre_data = localStorage.getItem(key);
+        let data_array = [];
+        if(pre_data){
+            data_array = JSON.parse(pre_data);
+        }
+        return data_array;
+    }
+
+    $('#customerCmb').on('change', (event) => {
+        customer_arr.map( (value) => {
+            if(value.customer_id === event.target.value){
+                cus = value ;
+                $('#customer_name').text(value.customer_name);
+                $('#customer_address').text(value.customer_address);
+                $('#customer_contact').text(value.customer_tel);
+            }
+        });
+    });
+    $('#itemCodeCmb').on('change', (event) => {
+        item_arr.map( (value) => {
+            if(value.item_code === event.target.value){
+                itm = value;
+                $('#des').text(value.item_description);
+                $('#qty_on_hand').text(value.item_qty);
+                $('#unit_price').text(value.item_unit_price);
+            }
+        });
+    });
+    $('#addBtn').on('click', () => {
+        order_item_arr.push(getObj());
+        addTable();
+    })
+
+    function getObj(){
+        return {
+            item_code : $("#itemCodeCmb :selected").text(),
+            item_description : $('#des').text(),
+            item_qty_on_hand : $('#qty_on_hand').text(),
+            item_unit_price : $('#unit_price').text(),
+            item_qty : $('#qty').val(),
+            total : $('#qty').val() * $('#unit_price').text()
+        }
+    }
+
+    function addTable(){
+
+        $('table tbody tr').remove();
+
+        order_item_arr.map((value) => {
+            var row = "<tr>" +
+                "<td>"+ value.item_code +"</td>" +
+                "<td>"+ value.item_description +"</td>" +
+                "<td>"+ value.item_qty_on_hand +"</td>" +
+                "<td>"+ value.item_unit_price +"</td>" +
+                "<td>"+ value.item_qty +"</td>" +
+                "<td>"+value.total+"</td>" +
+                "</tr>";
+
+            $('#tbl').append(row);
+
+        });
+    }
+
 </script>
 </body>
 </html>

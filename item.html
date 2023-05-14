@@ -27,9 +27,9 @@
             <input type="tel" class="form-control" id="qty" placeholder="123">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="submit" class="btn btn-primary bg-info border-info">Update</button>
-            <button type="submit" class="btn btn-primary bg-danger border-danger">Delete</button>
+            <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+            <button type="submit" class="btn btn-primary bg-info border-info" id="updateBtn">Update</button>
+            <button type="submit" class="btn btn-primary bg-danger border-danger" id="deleteBtn">Delete</button>
         </div>
     </form>
     <br>
@@ -39,7 +39,7 @@
     </form>
     <br>
     <form class="row g-3 p-2">
-        <table class="table">
+        <table class="table" id="tbl">
             <thead>
             <th>Item Code</th>
             <th>Description</th>
@@ -47,27 +47,152 @@
             <th>Qty On Hand</th>
             </thead>
             <tbody>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
-            <tr>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-                <td>aawdwad</td>
-            </tr>
             </tbody>
         </table>
     </form>
 </main>
+<script src="../assets/lib/jquery-3.6.4.min.js"></script>
+<script>
+
+    const item = "ITEM";
+
+    var arrIndex = -1; // index of selected object
+
+    //------------add new object into the localStorage---------------------------
+
+    $('#saveBtn').on('click', () => {
+
+        console.log("wdawdwad")
+
+        let arr= getLocalSData();
+
+        isExistsById(arr) === true  ? alert("Item code all ready exists !") :
+            arr.push(initObj()),localStorage.setItem(item, JSON.stringify(arr));
+        loadData();
+        clearData();
+    });
+
+    //--------check customer_id all ready exists --------------------------
+
+    function isExistsById(arr){
+        let flag = false;
+        arr.filter((event) => {
+            if (event.item_code === $('#itemCode').val()){
+                flag = true;
+            }
+        });
+        return flag;
+    }
+
+
+    //----------------get localStorage array-------------------------------
+
+    function getLocalSData(){
+
+        let pre_data = localStorage.getItem(item);
+        let data_array = [];
+        if(pre_data){
+            data_array = JSON.parse(pre_data);
+        }
+        return data_array;
+    }
+
+    //--------------create obj using textField data----------------------------
+
+    function initObj(){
+        return   {
+            item_code : $('#itemCode').val(),
+            item_description :$('#des').val(),
+            item_unit_price : $('#unitPrice').val(),
+            item_qty : $('#qty').val()
+
+        }
+    }
+
+    //-------------------load table data-------------------------------
+
+    function loadData(){
+
+        let per_data = localStorage.getItem(item);
+
+        /*$('table tbody tr td').remove();*/
+
+        let  item_data_arr = JSON.parse(per_data);
+        item_data_arr.map((value) => {
+            var row = "<tr>" +
+                "<td>"+ value.item_code +"</td>" +
+                "<td>"+ value.item_description +"</td>" +
+                "<td>"+ value.item_unit_price +"</td>" +
+                "<td>"+ value.item_qty +"</td>" +
+                "</tr>";
+
+            $('tbody').append(row);
+        });
+    }
+
+    loadData();
+
+    //---------------add table row click event listener-------------------------
+
+    $(document).ready(() => {
+        $('table  tbody  tr').on('click', (event) => {
+
+            $('#itemCode').val(event.currentTarget.cells[0].innerText)
+            $('#des').val(event.currentTarget.cells[1].innerText)
+            $('#unitPrice').val(event.currentTarget.cells[2].innerText)
+            $('#qty').val(event.currentTarget.cells[3].innerText)
+            arrIndex = event.currentTarget.sectionRowIndex;
+
+            document.getElementById('saveBtn').disabled = true;
+            document.getElementById('itemCode').disabled = true;
+        });
+    });
+
+    //-----------------update data in localStorage-------------------------------
+
+    $('#updateBtn').on('click', () => {
+
+        console.log(arrIndex)
+        if (arrIndex < 0){
+            alert("Please save the new item before update !");
+            return;
+        }
+        let cus_arr = getLocalSData();
+
+        cus_arr[arrIndex] = initObj();
+        localStorage.setItem(item, JSON.stringify(cus_arr));
+        loadData();
+        clearData();
+        arrIndex = -1;
+        /*document.location.preload;*/
+    });
+
+    //----------------------delete data in localStorage------------------------------
+
+    $('#deleteBtn').on('click', () => {
+
+        if (arrIndex < 0){
+            alert("Please save the new item before delete !");
+            return;
+        }
+        let cus_arr = getLocalSData();
+
+        cus_arr.splice(arrIndex, 1);
+        localStorage.setItem(item, JSON.stringify(cus_arr));
+        loadData();
+        clearData();
+        arrIndex = -1;
+    });
+    //-----------------------clear function-----------------------------------
+
+    function clearData(){
+        $('#itemCode').val("");
+        $('#des').val("");
+        $('#unitPrice').val("");
+        $('#qty').val("");
+        document.getElementById('itemCode').disabled = false;
+        document.getElementById('saveBtn').disabled = false;
+    }
+</script>
 </body>
 </html>
