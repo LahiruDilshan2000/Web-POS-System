@@ -68,6 +68,7 @@
         isExistsById(arr) === true  ? alert("Customer ID all ready exists !") :
             arr.push(initObj()),localStorage.setItem(data, JSON.stringify(arr));
         loadData();
+        addTableClickEvent();
         clearData();
     });
 
@@ -113,7 +114,7 @@
 
         let per_data = localStorage.getItem(data);
 
-        /*$('table tbody tr td').remove();*/
+        $('table tbody tr td').remove();
 
         let  customer_data_arr = JSON.parse(per_data);
         customer_data_arr.map((value) => {
@@ -144,13 +145,11 @@
         });
     }
 
-    loadData();
-
     //---------------add table row click event listener-------------------------
 
-    $(document).ready(() => {
+    function addTableClickEvent() {
+
         $('table  tbody  tr').on('click', (event) => {
-            console.log("dwdwad")
             $('#id').val(event.currentTarget.cells[0].innerText)
             $('#name').val(event.currentTarget.cells[1].innerText)
             $('#address').val(event.currentTarget.cells[2].innerText)
@@ -160,7 +159,11 @@
             document.getElementById('saveBtn').disabled = true;
             document.getElementById('id').disabled = true;
         });
-    });
+    }
+
+    loadData();
+    addTableClickEvent();
+
 
     //-----------------update data in localStorage-------------------------------
 
@@ -176,9 +179,9 @@
         cus_arr[arrIndex] = initObj();
         localStorage.setItem(data, JSON.stringify(cus_arr));
         loadData();
+        addTableClickEvent();
         clearData();
         arrIndex = -1;
-        /*document.location.preload;*/
     });
 
     //----------------------delete data in localStorage------------------------------
@@ -194,6 +197,7 @@
         cus_arr.splice(arrIndex, 1);
         localStorage.setItem(data, JSON.stringify(cus_arr));
         loadData();
+        addTableClickEvent();
         clearData();
         arrIndex = -1;
     });

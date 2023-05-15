@@ -62,13 +62,12 @@
 
     $('#saveBtn').on('click', () => {
 
-        console.log("wdawdwad")
-
         let arr= getLocalSData();
 
         isExistsById(arr) === true  ? alert("Item code all ready exists !") :
             arr.push(initObj()),localStorage.setItem(item, JSON.stringify(arr));
         loadData();
+        addTableClickEvent();
         clearData();
     });
 
@@ -115,7 +114,7 @@
 
         let per_data = localStorage.getItem(item);
 
-        /*$('table tbody tr td').remove();*/
+        $('table tbody tr td').remove();
 
         let  item_data_arr = JSON.parse(per_data);
         item_data_arr.map((value) => {
@@ -130,13 +129,11 @@
         });
     }
 
-    loadData();
-
     //---------------add table row click event listener-------------------------
 
-    $(document).ready(() => {
-        $('table  tbody  tr').on('click', (event) => {
+    function addTableClickEvent() {
 
+        $('table  tbody  tr').on('click', (event) => {
             $('#itemCode').val(event.currentTarget.cells[0].innerText)
             $('#des').val(event.currentTarget.cells[1].innerText)
             $('#unitPrice').val(event.currentTarget.cells[2].innerText)
@@ -146,7 +143,10 @@
             document.getElementById('saveBtn').disabled = true;
             document.getElementById('itemCode').disabled = true;
         });
-    });
+    }
+
+    loadData();
+    addTableClickEvent();
 
     //-----------------update data in localStorage-------------------------------
 
@@ -162,9 +162,9 @@
         cus_arr[arrIndex] = initObj();
         localStorage.setItem(item, JSON.stringify(cus_arr));
         loadData();
+        addTableClickEvent();
         clearData();
         arrIndex = -1;
-        /*document.location.preload;*/
     });
 
     //----------------------delete data in localStorage------------------------------
@@ -180,6 +180,7 @@
         cus_arr.splice(arrIndex, 1);
         localStorage.setItem(item, JSON.stringify(cus_arr));
         loadData();
+        addTableClickEvent();
         clearData();
         arrIndex = -1;
     });
