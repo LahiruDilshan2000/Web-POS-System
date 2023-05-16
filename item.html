@@ -12,11 +12,11 @@
     <form class="row g-3" id="myform">
         <div class="col-md-6">
             <label class="form-label">Item Code</label>
-            <input type="text" class="form-control" id="itemCode">
+            <input type="text" class="form-control" id="itemCode" placeholder="R001">
         </div>
         <div class="col-md-6">
             <label class="form-label">Description</label>
-            <input type="text" class="form-control" id="des">
+            <input type="text" class="form-control" id="des" placeholder="Any">
         </div>
         <div class="col-6">
             <label class="form-label">Unit Price</label>
@@ -27,14 +27,15 @@
             <input type="tel" class="form-control" id="qty" placeholder="123">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
-            <button type="submit" class="btn btn-primary bg-info border-info" id="updateBtn">Update</button>
-            <button type="submit" class="btn btn-primary bg-danger border-danger" id="deleteBtn">Delete</button>
+            <button type="button" class="btn btn-primary" id="saveBtn">Save</button>
+            <button type="button" class="btn btn-primary bg-info border-info" id="updateBtn">Update</button>
+            <button type="button" class="btn btn-primary bg-danger border-danger" id="deleteBtn">Delete</button>
         </div>
     </form>
     <br>
-    <form class="d-flex" role="search" >
-        <input class="form-control me-2 was-validated " type="search" placeholder="Search" aria-label="Search" id="search">
+    <form class="d-flex" role="search">
+        <input class="form-control me-2 was-validated " type="search" placeholder="Search" aria-label="Search"
+               id="search">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
     <br>
@@ -54,7 +55,7 @@
 <script src="../assets/lib/jquery-3.6.4.min.js"></script>
 <script>
 
-    const item = "ITEM";
+    var item = "ITEM";
 
     var arrIndex = -1; // index of selected object
 
@@ -62,21 +63,28 @@
 
     $('#saveBtn').on('click', () => {
 
-        let arr= getLocalSData();
+        if (checkText()) {
+            let arr = getLocalSData();
 
-        isExistsById(arr) === true  ? alert("Item code all ready exists !") :
-            arr.push(initObj()),localStorage.setItem(item, JSON.stringify(arr));
-        loadData();
-        addTableClickEvent();
-        clearData();
+            if (isExistsById(arr)) {
+                alert("Item code all ready exists !");
+                return;
+            }
+            arr.push(initObj());
+            localStorage.setItem(item, JSON.stringify(arr));
+            loadData();
+            addTableClickEvent();
+            disableBtn();
+            clearData();
+        }
     });
 
     //--------check customer_id all ready exists --------------------------
 
-    function isExistsById(arr){
+    function isExistsById(arr) {
         let flag = false;
         arr.filter((event) => {
-            if (event.item_code === $('#itemCode').val()){
+            if (event.item_code === $('#itemCode').val()) {
                 flag = true;
             }
         });
@@ -86,11 +94,11 @@
 
     //----------------get localStorage array-------------------------------
 
-    function getLocalSData(){
+    function getLocalSData() {
 
         let pre_data = localStorage.getItem(item);
         let data_array = [];
-        if(pre_data){
+        if (pre_data) {
             data_array = JSON.parse(pre_data);
         }
         return data_array;
@@ -98,35 +106,38 @@
 
     //--------------create obj using textField data----------------------------
 
-    function initObj(){
-        return   {
-            item_code : $('#itemCode').val(),
-            item_description :$('#des').val(),
-            item_unit_price : $('#unitPrice').val(),
-            item_qty : $('#qty').val()
+    function initObj() {
+        return {
+            item_code: $('#itemCode').val(),
+            item_description: $('#des').val(),
+            item_unit_price: $('#unitPrice').val(),
+            item_qty: $('#qty').val()
 
         }
     }
 
     //-------------------load table data-------------------------------
 
-    function loadData(){
+    function loadData() {
 
         let per_data = localStorage.getItem(item);
 
         $('table tbody tr td').remove();
 
-        let  item_data_arr = JSON.parse(per_data);
-        item_data_arr.map((value) => {
-            var row = "<tr>" +
-                "<td>"+ value.item_code +"</td>" +
-                "<td>"+ value.item_description +"</td>" +
-                "<td>"+ value.item_unit_price +"</td>" +
-                "<td>"+ value.item_qty +"</td>" +
-                "</tr>";
+        let item_data_arr = JSON.parse(per_data);
+        if(per_data){
+            item_data_arr.map((value) => {
+                var row = "<tr>" +
+                    "<td>" + value.item_code + "</td>" +
+                    "<td>" + value.item_description + "</td>" +
+                    "<td>" + value.item_unit_price + "</td>" +
+                    "<td>" + value.item_qty + "</td>" +
+                    "</tr>";
 
-            $('tbody').append(row);
-        });
+                $('tbody').append(row);
+            });
+        }
+
     }
 
     //---------------add table row click event listener-------------------------
@@ -142,6 +153,8 @@
 
             document.getElementById('saveBtn').disabled = true;
             document.getElementById('itemCode').disabled = true;
+            document.getElementById('updateBtn').disabled = false;
+            document.getElementById('deleteBtn').disabled = false;
         });
     }
 
@@ -152,41 +165,95 @@
 
     $('#updateBtn').on('click', () => {
 
-        console.log(arrIndex)
-        if (arrIndex < 0){
-            alert("Please save the new item before update !");
-            return;
-        }
-        let cus_arr = getLocalSData();
+        if (checkText()) {
+            if (arrIndex < 0) {
+                alert("Please save the new item before update !");
+                return;
+            }
+            let cus_arr = getLocalSData();
 
-        cus_arr[arrIndex] = initObj();
-        localStorage.setItem(item, JSON.stringify(cus_arr));
-        loadData();
-        addTableClickEvent();
-        clearData();
-        arrIndex = -1;
+            cus_arr[arrIndex] = initObj();
+            localStorage.setItem(item, JSON.stringify(cus_arr));
+            loadData();
+            addTableClickEvent();
+            disableBtn();
+            clearData();
+            arrIndex = -1;
+        }
     });
 
     //----------------------delete data in localStorage------------------------------
 
     $('#deleteBtn').on('click', () => {
 
-        if (arrIndex < 0){
-            alert("Please save the new item before delete !");
+        if (checkText()) {
+            if (arrIndex < 0) {
+                alert("Please save the new item before delete !");
+                return;
+            }
+            let cus_arr = getLocalSData();
+
+            cus_arr.splice(arrIndex, 1);
+            localStorage.setItem(item, JSON.stringify(cus_arr));
+            loadData();
+            addTableClickEvent();
+            disableBtn();
+            clearData();
+            arrIndex = -1;
+        }
+    });
+
+    function checkText() {
+        if ($('#itemCode').val() === "") {
+            alert("Item code is empty or invalid !");
+            $('#itemCode').focus();
+            $('#itemCode').css({
+                borderBottom: "2px solid red"
+            });
+            return false;
+        } else if ($('#des').val() === "") {
+            alert("Description is invalid or empty !");
+            $('#des').focus();
+            $('#des').css({borderBottom: "2px solid red"});
+            return false;
+        } else if ($('#unitPrice').val() === "") {
+            alert("Unit price is invalid or empty  !");
+            $('#unitPrice').focus();
+            $('#unitPrice').css({borderBottom: "2px solid red"});
+            return false;
+        } else if ($('#qty').val() === "") {
+            alert("Qty is invalid or empty  !");
+            $('#qty').focus();
+            $('#qty').css({borderBottom: "2px solid red"});
+            return false;
+        }
+        return true;
+    }
+
+    $('#itemCode').on('keypress', () => {
+        $('#itemCode').css({borderBottom: "1px solid #ced4da"});
+    });
+    $('#des').on('keypress', () => {
+        $('#des').css({borderBottom: "1px solid #ced4da"});
+    });
+    $('#unitPrice').on('keypress', () => {
+        $('#unitPrice').css({borderBottom: "1px solid #ced4da"});
+    });
+    $('#qty').on('keypress', () => {
+        $('#qty').css({borderBottom: "1px solid #ced4da"});
+    });
+
+    $('#myform').on('mouseover', () => {
+        if ($('#itemCode').val() !== "" && $('#des').val() !== "" && $('#unitPrice').val() !== "" && $('#qty').val() !== "" && arrIndex === -1) {
+            document.getElementById('saveBtn').disabled = false;
             return;
         }
-        let cus_arr = getLocalSData();
-
-        cus_arr.splice(arrIndex, 1);
-        localStorage.setItem(item, JSON.stringify(cus_arr));
-        loadData();
-        addTableClickEvent();
-        clearData();
-        arrIndex = -1;
+        document.getElementById('saveBtn').disabled = true;
     });
+
     //-----------------------clear function-----------------------------------
 
-    function clearData(){
+    function clearData() {
         $('#itemCode').val("");
         $('#des').val("");
         $('#unitPrice').val("");
@@ -194,6 +261,14 @@
         document.getElementById('itemCode').disabled = false;
         document.getElementById('saveBtn').disabled = false;
     }
+
+    function disableBtn() {
+        document.getElementById('saveBtn').disabled = true;
+        document.getElementById('updateBtn').disabled = true;
+        document.getElementById('deleteBtn').disabled = true;
+    }
+
+    disableBtn();
 </script>
 </body>
 </html>

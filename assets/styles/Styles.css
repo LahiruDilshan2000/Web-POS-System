@@ -22,18 +22,15 @@ header > div {
     box-shadow: 0mm 0mm 8px #b2bec3;
 
 }
-
-header > div > h1 {
-    color: #485460;
-}
-
 header > div > h1 {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 20px;
     margin: auto;
     height: fit-content;
+    color: #485460;
+    font-size: 30px;
+    transition: 0.3s;
 }
 
 aside {
@@ -148,6 +145,7 @@ main > h1 {
     margin-top: 10px;
     margin-bottom: 20px;
     color: #485460;
+    font-size: 30px;
 }
 
 #search {
