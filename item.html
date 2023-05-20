@@ -146,8 +146,6 @@
         $('#des').val($(event.target).closest('tr').find('td').eq(1).text());
         $('#unitPrice').val($(event.target).closest('tr').find('td').eq(2).text());
         $('#qty').val($(event.target).closest('tr').find('td').eq(3).text());
-        arrIndex = $(event.target).closest('tr')[0].sectionRowIndex;
-
 
         document.getElementById('saveBtn').disabled = true;
         document.getElementById('itemCode').disabled = true;
