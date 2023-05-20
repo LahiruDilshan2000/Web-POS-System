@@ -54,10 +54,10 @@
     </form>
 </main>
 <script src="../assets/lib/jquery-3.6.4.min.js"></script>
+<script src="controller/CustomerController.js"></script>
 <script>
 
     var data = "DATA";
-    var arrIndex = -1; // index of selected object
 
     //------------add new object into the localStorage---------------------------
 
@@ -73,7 +73,6 @@
             arr.push(initObj());
             localStorage.setItem(data, JSON.stringify(arr));
             loadData();
-            addTableClickEvent();
             disableBtn();
             clearData();
         }
@@ -136,41 +135,26 @@
 
                 $('tbody').append(row);
             });
-            //---------------add table row with other way----------------------
-
-            /*var tr=  document.createElement('tr');
-
-            var td1 = tr.appendChild(document.createElement('td'));
-            var td2 = tr.appendChild(document.createElement('td'));
-            var td3 = tr.appendChild(document.createElement('td'));
-            var td4 = tr.appendChild(document.createElement('td'));
-
-            td1.innerHTML=value.customer_id;
-            td2.innerHTML=value.customer_name;
-            td3.innerHTML=value.customer_address;
-            td4.innerHTML=value.customer_tel;
-
-            document.getElementById("tbl").appendChild(tr);*/
         }
     }
 
     //---------------add table row click event listener-------------------------
 
-    function addTableClickEvent() {
+    loadData();
 
-        $('table  tbody  tr').on('click', (event) => {
-            $('#id').val(event.currentTarget.cells[0].innerText)
-            $('#name').val(event.currentTarget.cells[1].innerText)
-            $('#address').val(event.currentTarget.cells[2].innerText)
-            $('#tel').val(event.currentTarget.cells[3].innerText)
-            arrIndex = event.currentTarget.sectionRowIndex;
+        $('table tbody').on('click', 'tr', (event) => {
+            $('#id').val($(event.target).closest('tr').find('td').eq(0).text())
+            $('#name').val($(event.target).closest('tr').find('td').eq(1).text())
+            $('#address').val($(event.target).closest('tr').find('td').eq(2).text())
+            $('#tel').val($(event.target).closest('tr').find('td').eq(3).text())
+
 
             document.getElementById('saveBtn').disabled = true;
             document.getElementById('id').disabled = true;
             document.getElementById('updateBtn').disabled = false;
             document.getElementById('deleteBtn').disabled = false;
         });
-    }
+
 
 
     //-----------------update data in localStorage-------------------------------
@@ -178,16 +162,14 @@
     $('#updateBtn').on('click', () => {
 
         if (checkText()) {
-            if (arrIndex < 0) {
-                alert("Please save the new customer before update !");
-                return;
-            }
+
             let cus_arr = getLocalSData();
 
-            cus_arr[arrIndex] = initObj();
+            let index = cus_arr.findIndex(value => value.customer_id === $('#id').val());
+
+            cus_arr[index] = initObj();
             localStorage.setItem(data, JSON.stringify(cus_arr));
             loadData();
-            addTableClickEvent();
             disableBtn();
             clearData();
             arrIndex = -1;
@@ -199,16 +181,14 @@
     $('#deleteBtn').on('click', () => {
 
         if (checkText()) {
-            if (arrIndex < 0) {
-                alert("Please save the new customer before delete !");
-                return;
-            }
+
             let cus_arr = getLocalSData();
 
-            cus_arr.splice(arrIndex, 1);
+            let index = cus_arr.findIndex(value => value.customer_id === $('#id').val());
+
+            cus_arr.splice(index, 1);
             localStorage.setItem(data, JSON.stringify(cus_arr));
             loadData();
-            addTableClickEvent();
             disableBtn();
             clearData();
             arrIndex = -1;
@@ -256,7 +236,7 @@
     });
 
     $('#myform').on('mouseover', () => {
-        if ($('#id').val() !== "" && $('#name').val() !== "" && $('#address').val() !== "" && $('#tel').val() !== "" && arrIndex === -1) {
+        if ($('#id').val() !== "" && $('#name').val() !== "" && $('#address').val() !== "" && $('#tel').val() !== "") {
             document.getElementById('saveBtn').disabled = false;
             return;
         }
@@ -280,8 +260,6 @@
         document.getElementById('deleteBtn').disabled = true;
     }
 
-    loadData();
-    addTableClickEvent();
     disableBtn();
 
 </script>

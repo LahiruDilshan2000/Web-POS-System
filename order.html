@@ -202,7 +202,7 @@
             $('#qty').css({borderBottom: "2px solid red"});
             return;
         }
-        $('#addBtn').text() === 'Add' ? order_item_arr.push(getObj()) :
+        $('#addBtn').text() === 'Add' ? (order_item_arr.push(getObj())) :
             (order_item_arr[index] = getObj(), $('#addBtn').text('Add'), $('#addBtn').css({
                 background: '#0d6efd',
                 border: '#0d6efd'
@@ -242,27 +242,26 @@
 
             $('#tbl').append(row);
 
-            addClickEvent();
 
         });
     }
 
-    function addClickEvent() {
 
-        $('table tbody tr').on('click', (event) => {
+    $('table tbody').on('click', 'tr', (event) => {
 
-            $("#itemCodeCmb :selected").text(event.currentTarget.children[0].innerText);
-            $('#des').text(event.currentTarget.children[1].innerText);
-            $('#qty_on_hand').text(event.currentTarget.children[2].innerText);
-            $('#unit_price').text(event.currentTarget.children[3].innerText);
-            $('#qty').val(event.currentTarget.children[4].innerText);
-            index = event.currentTarget.sectionRowIndex;
-            $('#addBtn').text('Update');
-            $('#addBtn').css({
-                background: 'red', border: 'red'
-            });
+        $("#itemCodeCmb :selected").text($(event.target).closest('tr').find('td').eq(0).text());
+        $('#des').text($(event.target).closest('tr').find('td').eq(1).text());
+        $('#qty_on_hand').text($(event.target).closest('tr').find('td').eq(2).text());
+        $('#unit_price').text($(event.target).closest('tr').find('td').eq(3).text());
+        $('#qty').val($(event.target).closest('tr').find('td').eq(4).text());
+
+        index = order_item_arr.findIndex(value => value.item_code === $("#itemCodeCmb :selected").text());
+
+        $('#addBtn').text('Update');
+        $('#addBtn').css({
+            background: 'red', border: 'red'
         });
-    }
+    });
 
     $('#placeOrderBtn').on('click', () => {
         if (order_item_arr.length === 0) {
@@ -290,6 +289,7 @@
 
     function clearData() {
         document.getElementById("itemCodeCmb").selectedIndex = 0;
+        document.getElementById('customerCmb').disabled = false;
         $('#des').text('.');
         $('#qty_on_hand').text(".");
         $('#unit_price').text(".");

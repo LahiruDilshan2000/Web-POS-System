@@ -57,8 +57,6 @@
 
     var item = "ITEM";
 
-    var arrIndex = -1; // index of selected object
-
     //------------add new object into the localStorage---------------------------
 
     $('#saveBtn').on('click', () => {
@@ -73,7 +71,6 @@
             arr.push(initObj());
             localStorage.setItem(item, JSON.stringify(arr));
             loadData();
-            addTableClickEvent();
             disableBtn();
             clearData();
         }
@@ -126,9 +123,9 @@
 
         let item_data_arr = JSON.parse(per_data);
         if(per_data){
-            item_data_arr.map((value) => {
-                var row = "<tr>" +
-                    "<td>" + value.item_code + "</td>" +
+            item_data_arr.map((value, index) => {
+                    var row = "<tr>" +
+                    "<td>" + value.item_code+ "</td>" +
                     "<td>" + value.item_description + "</td>" +
                     "<td>" + value.item_unit_price + "</td>" +
                     "<td>" + value.item_qty + "</td>" +
@@ -142,40 +139,36 @@
 
     //---------------add table row click event listener-------------------------
 
-    function addTableClickEvent() {
-
-        $('table  tbody  tr').on('click', (event) => {
-            $('#itemCode').val(event.currentTarget.cells[0].innerText)
-            $('#des').val(event.currentTarget.cells[1].innerText)
-            $('#unitPrice').val(event.currentTarget.cells[2].innerText)
-            $('#qty').val(event.currentTarget.cells[3].innerText)
-            arrIndex = event.currentTarget.sectionRowIndex;
-
-            document.getElementById('saveBtn').disabled = true;
-            document.getElementById('itemCode').disabled = true;
-            document.getElementById('updateBtn').disabled = false;
-            document.getElementById('deleteBtn').disabled = false;
-        });
-    }
-
     loadData();
-    addTableClickEvent();
+
+    $('table tbody').on('click', 'tr', (event) => {
+        $('#itemCode').val($(event.target).closest('tr').find('td').eq(0).text());
+        $('#des').val($(event.target).closest('tr').find('td').eq(1).text());
+        $('#unitPrice').val($(event.target).closest('tr').find('td').eq(2).text());
+        $('#qty').val($(event.target).closest('tr').find('td').eq(3).text());
+        arrIndex = $(event.target).closest('tr')[0].sectionRowIndex;
+
+
+        document.getElementById('saveBtn').disabled = true;
+        document.getElementById('itemCode').disabled = true;
+        document.getElementById('updateBtn').disabled = false;
+        document.getElementById('deleteBtn').disabled = false;
+    });
+
 
     //-----------------update data in localStorage-------------------------------
 
     $('#updateBtn').on('click', () => {
 
         if (checkText()) {
-            if (arrIndex < 0) {
-                alert("Please save the new item before update !");
-                return;
-            }
             let cus_arr = getLocalSData();
 
-            cus_arr[arrIndex] = initObj();
+            let index = cus_arr.findIndex(value => value.item_code === $('#itemCode').val());
+
+            cus_arr[index] = initObj();
+
             localStorage.setItem(item, JSON.stringify(cus_arr));
             loadData();
-            addTableClickEvent();
             disableBtn();
             clearData();
             arrIndex = -1;
@@ -187,16 +180,13 @@
     $('#deleteBtn').on('click', () => {
 
         if (checkText()) {
-            if (arrIndex < 0) {
-                alert("Please save the new item before delete !");
-                return;
-            }
             let cus_arr = getLocalSData();
 
-            cus_arr.splice(arrIndex, 1);
+            let index = cus_arr.findIndex(value => value.item_code === $('#itemCode').val());
+
+            cus_arr.splice(index, 1);
             localStorage.setItem(item, JSON.stringify(cus_arr));
             loadData();
-            addTableClickEvent();
             disableBtn();
             clearData();
             arrIndex = -1;
