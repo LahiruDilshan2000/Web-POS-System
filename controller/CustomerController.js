@@ -1,8 +1,6 @@
 import {Customer} from "../models/Customer.js";
 import {getAllDB, saveCustomerDB, updateCustomerDB, deleteCustomerDB} from "../db/DB.js";
 
-var data = "DATA";
-
 export class CustomerController {
     constructor() {
         //$('#saveBtn').click(this.handleValidation.bind(this));
@@ -30,7 +28,7 @@ export class CustomerController {
 
     handleSaveCustomer() {
 
-        if (this.handleExistsData(getAllDB())) {
+        if (this.handleExistsCustomer()) {
             alert("Customer ID all ready exists !");
             return;
         }
@@ -59,8 +57,7 @@ export class CustomerController {
 
         $('table tbody tr td').remove();
 
-        let customer_data_arr = getAllDB();
-        customer_data_arr.map((value) => {
+        getAllDB("DATA").map((value) => {
             var row = "<tr>" +
                 "<td>" + value._id + "</td>" +
                 "<td>" + value._name + "</td>" +
@@ -84,10 +81,10 @@ export class CustomerController {
         document.getElementById('id').disabled = false;
     }
 
-    handleExistsData(arr = []) {
+    handleExistsCustomer() {
 
         let flag = false;
-        arr.filter((event) => {
+        getAllDB("DATA").filter((event) => {
             if (event._id === $('#id').val()) {
                 flag = true;
             }

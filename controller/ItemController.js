@@ -1,63 +1,59 @@
 import {Item} from "../models/Item.js";
+import {getAllDB, saveItemDB, updateItemDB, deleteItemDB} from "../db/DB.js";
 
-var item = "ITEM";
+export class ItemController{
+    constructor() {
+        $('#saveBtn').on('click', () => {
+            this.handleValidation("Save");
+        });
+        $('#updateBtn').on('click', () => {
+            this.handleValidation("Update");
+        });
+        $('#deleteBtn').on('click', () => {
+            this.handleValidation("Delete");
+        });
+        this.handleLoadItem();
+        this.handleTableClickEvent();
+    }
 
-//------------add new object into the localStorage---------------------------
+    handleValidation(Function) {
 
-$('#saveBtn').on('click', () => {
+        !/^(R)([0-9]{2,})$/.test($('#itemCode').val()) ? alert("Invalid Item code") : !$('#des').val() ? alert("Description is empty !") :
+            !/\d+$/.test($('#unitPrice').val()) ? alert("Invalid unit price or empty !") : !/^\d+$/.test($('#qty').val()) ? alert("Invalid qty or empty !") :
+                Function === "Save" ? this.handleSaveItem() : Function === "Update" ? this.handleUpdateItem() :
+                    this.handleDeleteItem();
+    }
 
-    if (checkText()) {
-        let arr = getLocalSData();
+    handleSaveItem(){
 
-        if (isExistsById(arr)) {
+        if (this.handleExistingItem()){
             alert("Item code all ready exists !");
             return;
         }
-        arr.push(new Item($('#itemCode').val(),$('#des').val(),$('#unitPrice').val(),$('#qty').val()));
-        localStorage.setItem(item, JSON.stringify(arr));
-        loadData();
-        disableBtn();
-        clearData();
+        saveItemDB(new Item($('#itemCode').val(), $('#des').val(), $('#unitPrice').val(), $('#qty').val()));
+
+        this.handleLoadItem();
     }
-});
 
-//--------check customer_id all ready exists --------------------------
+    handleUpdateItem(){
 
-function isExistsById(arr) {
-    let flag = false;
-    arr.filter((event) => {
-        if (event.item_code === $('#itemCode').val()) {
-            flag = true;
-        }
-    });
-    return flag;
-}
+        updateItemDB(new Item($('#itemCode').val(), $('#des').val(), $('#unitPrice').val(), $('#qty').val()));
 
-
-//----------------get localStorage array-------------------------------
-
-function getLocalSData() {
-
-    let pre_data = localStorage.getItem(item);
-    let data_array = [];
-    if (pre_data) {
-        data_array = JSON.parse(pre_data);
+        this.handleLoadItem();
     }
-    return data_array;
-}
 
-//-------------------load table data-------------------------------
+    handleDeleteItem(){
 
-function loadData() {
+        deleteItemDB(new Item($('#itemCode').val(), $('#des').val(), $('#unitPrice').val(), $('#qty').val()));
 
-    let per_data = localStorage.getItem(item);
+        this.handleLoadItem();
+    }
 
-    $('table tbody tr td').remove();
+    handleLoadItem(){
 
-    let item_data_arr = JSON.parse(per_data);
-    if(per_data){
-        item_data_arr.map((value, index) => {
-            console.log(value)
+        $('table tbody tr td').remove();
+
+        getAllDB("ITEM").map((value) => {
             var row = "<tr>" +
                 "<td>" + value._itemCode + "</td>" +
                 "<td>" + value._description + "</td>" +
@@ -67,125 +63,45 @@ function loadData() {
 
             $('tbody').append(row);
         });
-    }
 
-}
-
-//---------------add table row click event listener-------------------------
-
-loadData();
-
-$('table tbody').on('click', 'tr', (event) => {
-    $('#itemCode').val($(event.target).closest('tr').find('td').eq(0).text());
-    $('#des').val($(event.target).closest('tr').find('td').eq(1).text());
-    $('#unitPrice').val($(event.target).closest('tr').find('td').eq(2).text());
-    $('#qty').val($(event.target).closest('tr').find('td').eq(3).text());
-
-    document.getElementById('saveBtn').disabled = true;
-    document.getElementById('itemCode').disabled = true;
-    document.getElementById('updateBtn').disabled = false;
-    document.getElementById('deleteBtn').disabled = false;
-});
-
-
-//-----------------update data in localStorage-------------------------------
-
-$('#updateBtn').on('click', () => {
-    console.log('hi123.....');
-    if (checkText()) {
-        let cus_arr = getLocalSData();
-
-        let index = cus_arr.findIndex(value => value.item_code === $('#itemCode').val());
-
-        cus_arr[index] = new Item($('#itemCode').val(),$('#des').val(),$('#unitPrice').val(),$('#qty').val())
-
-        localStorage.setItem(item, JSON.stringify(cus_arr));
-        loadData();
-        disableBtn();
-        clearData();
-    }
-});
-
-//----------------------delete data in localStorage------------------------------
-
-$('#deleteBtn').on('click', () => {
-
-    if (checkText()) {
-        let cus_arr = getLocalSData();
-
-        let index = cus_arr.findIndex(value => value.item_code === $('#itemCode').val());
-
-        cus_arr.splice(index, 1);
-        localStorage.setItem(item, JSON.stringify(cus_arr));
-        loadData();
-        disableBtn();
-        clearData();
-    }
-});
-
-function checkText() {
-    if ($('#itemCode').val() === "") {
-        alert("Item code is empty or invalid !");
-        $('#itemCode').focus();
-        $('#itemCode').css({
-            borderBottom: "2px solid red"
-        });
-        return false;
-    } else if ($('#des').val() === "") {
-        alert("Description is invalid or empty !");
-        $('#des').focus();
-        $('#des').css({borderBottom: "2px solid red"});
-        return false;
-    } else if ($('#unitPrice').val() === "") {
-        alert("Unit price is invalid or empty  !");
-        $('#unitPrice').focus();
-        $('#unitPrice').css({borderBottom: "2px solid red"});
-        return false;
-    } else if ($('#qty').val() === "") {
-        alert("Qty is invalid or empty  !");
-        $('#qty').focus();
-        $('#qty').css({borderBottom: "2px solid red"});
-        return false;
-    }
-    return true;
-}
-
-$('#itemCode').on('keypress', () => {
-    $('#itemCode').css({borderBottom: "1px solid #ced4da"});
-});
-$('#des').on('keypress', () => {
-    $('#des').css({borderBottom: "1px solid #ced4da"});
-});
-$('#unitPrice').on('keypress', () => {
-    $('#unitPrice').css({borderBottom: "1px solid #ced4da"});
-});
-$('#qty').on('keypress', () => {
-    $('#qty').css({borderBottom: "1px solid #ced4da"});
-});
-
-$('#myform').on('mouseover', () => {
-    if ($('#itemCode').val() !== "" && $('#des').val() !== "" && $('#unitPrice').val() !== "" && $('#qty').val() !== "") {
+        // disableBtn();
         document.getElementById('saveBtn').disabled = false;
-        return;
+        document.getElementById('updateBtn').disabled = true;
+        document.getElementById('deleteBtn').disabled = true;
+
+        //clearData();
+        $('#itemCode').val("");
+        $('#des').val("");
+        $('#unitPrice').val("");
+        $('#qty').val("");
+        document.getElementById('itemCode').disabled = false;
+
     }
-    document.getElementById('saveBtn').disabled = true;
-});
 
-//-----------------------clear function-----------------------------------
+    handleExistingItem(){
 
-function clearData() {
-    $('#itemCode').val("");
-    $('#des').val("");
-    $('#unitPrice').val("");
-    $('#qty').val("");
-    document.getElementById('itemCode').disabled = false;
-    document.getElementById('saveBtn').disabled = false;
+        let flag = false;
+        getAllDB("ITEM").filter((event) => {
+            if (event._itemCode === $('#itemCode').val()) {
+                flag = true;
+            }
+        });
+        return flag;
+    }
+
+    handleTableClickEvent(){
+
+        $('table tbody').on('click', 'tr', (event) => {
+            $('#itemCode').val($(event.target).closest('tr').find('td').eq(0).text())
+            $('#des').val($(event.target).closest('tr').find('td').eq(1).text())
+            $('#unitPrice').val($(event.target).closest('tr').find('td').eq(2).text())
+            $('#qty').val($(event.target).closest('tr').find('td').eq(3).text())
+
+            document.getElementById('saveBtn').disabled = true;
+            document.getElementById('itemCode').disabled = true;
+            document.getElementById('updateBtn').disabled = false;
+            document.getElementById('deleteBtn').disabled = false;
+        });
+    }
 }
-
-function disableBtn() {
-    document.getElementById('saveBtn').disabled = true;
-    document.getElementById('updateBtn').disabled = true;
-    document.getElementById('deleteBtn').disabled = true;
-}
-
-disableBtn();
+new ItemController();
