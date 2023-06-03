@@ -1,6 +1,7 @@
 
 var cusData = "DATA";
 var itemData = "ITEM";
+var orderData = "ORDER"
 
 export function getAllDB(data){
 
@@ -66,4 +67,12 @@ export function deleteItemDB(item){
     data_array.splice(index, 1);
 
     localStorage.setItem(itemData, JSON.stringify(data_array));
+}
+export function saveOrderDB(order){
+
+    let data_array = getAllDB(orderData);
+
+    data_array.push(order);
+
+    localStorage.setItem(orderData, JSON.stringify(data_array));
 }
