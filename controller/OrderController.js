@@ -6,6 +6,7 @@ var order_item_arr = [];
 var cus;
 var itm;
 var index;
+var selectedItemCode;
 
 export class OrderController {
 
@@ -22,6 +23,9 @@ export class OrderController {
         $('#placeOrderBtn').on('click', () => {
             this.handleSaveOrder();
         });
+        $('#deleteBtn').on('click', () => {
+            this.handleDeleteItem();
+        });
 
         this.handleTableClickEvent();
         this.handDateTime();
@@ -33,7 +37,7 @@ export class OrderController {
     handleOrderID() {
 
         let arr = getAllDB("ORDER");
-        if (arr) {
+        if (arr.length === 0) {
             $('#order_id').text("MD-00001");
             return;
         }
@@ -59,6 +63,8 @@ export class OrderController {
         getAllDB("DATA").map((value) => {
             $('#customerCmb').append("<option>" + value._id + "</option>");
         });
+
+        document.getElementById('deleteBtn').style.display = "none";
     }
 
     handleCustomerDetails(id) {
@@ -97,39 +103,100 @@ export class OrderController {
             $('#itemCodeCmb :selected').text() === "Choose..." ? (alert("Please select the item details !"), $('#itemCodeCmb').focus(), $('#itemCodeCmb').css({borderBottom: "2px solid red"})) :
                 !/\d+$/.test($('#qty').val()) ? (alert("Qty invalid or empty !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
                     $('#qty').val() > $('#qty_on_hand').text() ? (alert("Noo much qty left !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
-                        this.handleAddOrder();
+                        $('#addBtn').text() === 'Add' ?  this.handleAddItem() : this.handleUpdateItem();
+    }
+
+    handleUpdateItem() {
+
+        let index = order_item_arr.findIndex(value => value._item._itemCode === selectedItemCode);
+
+        if ( parseInt($('#qty').val()) > parseInt($('#qty_on_hand').text())) {
+
+            alert("Noo much qty left !");
+            $('#qty').focus();
+            $('#qty').css({borderBottom: "2px solid red"});
+            return ;
+        }
+
+        order_item_arr[index] = new Order_Item(itm, $('#qty').val(), $('#qty').val() * $('#unit_price').text());
+
+        $('#addBtn').text('Add'), $('#addBtn').css({background: '#0d6efd', border: '#0d6efd'});
+
+        this.handleLoadTable();
+        this.handleClearFunction();
 
     }
 
-    handleAddOrder() {
+    handleAddItem(){
 
-        $('#addBtn').text() === 'Add' ? (order_item_arr.push(new Order_Item(itm, $('#qty').val(), $('#qty').val() * $('#unit_price').text()))) :
-            //(order_item_arr[index] = "getObj()", $('#addBtn').text('Add'), $('#addBtn').css({
-                //background: '#0d6efd',
-                //border: '#0d6efd'}))
-            "";
+        let index = this.handleIsExists();
 
+        if (index === -1) {
+
+            order_item_arr.push(new Order_Item(itm, $('#qty').val(), $('#qty').val() * $('#unit_price').text()));
+
+        } else if ((parseInt(order_item_arr[index]._qty) + parseInt($('#qty').val())) > parseInt($('#qty_on_hand').text())) {
+
+            alert("Noo much qty left !");
+            $('#qty').focus();
+            $('#qty').css({borderBottom: "2px solid red"});
+
+        } else {
+
+
+            order_item_arr[index]._qty = parseInt(order_item_arr[index]._qty) + parseInt($('#qty').val());
+            order_item_arr[index]._total = parseInt(order_item_arr[index]._qty) * parseInt($('#unit_price').text());
+        }
+
+        document.getElementById('customerCmb').disabled = true;
         this.handleLoadTable();
+        this.handleClearFunction();
+    }
+
+    handleClearFunction(){
 
         document.getElementById("itemCodeCmb").selectedIndex = 0;
-        document.getElementById('customerCmb').disabled = true;
+        document.getElementById('deleteBtn').style.display = "none";
+        $('#addBtn').text('Add');
+        $('#addBtn').css({background: '#0d6efd', border: '#0d6efd'});
         $('#des').text('.');
         $('#qty_on_hand').text(".");
         $('#unit_price').text(".");
         $('#qty').val("");
+
+    }
+
+    handleDeleteItem(){
+
+        order_item_arr.splice(order_item_arr.findIndex(value => value._item._itemCode === selectedItemCode), 1);
+
+        this.handleLoadTable();
+
+        this.handleClearFunction();
+
+        if (order_item_arr.length === 0){
+            document.getElementById("customerCmb").selectedIndex = 0;
+            document.getElementById('customerCmb').disabled = false;
+            $('#customer_name').text(".");
+            $('#customer_address').text(".");
+            $('#customer_contact').text(".");
+        }
+    }
+
+    handleIsExists() {
+
+        return order_item_arr.findIndex(value => value._item._itemCode === $('#itemCodeCmb :selected').text());
+
     }
 
     handleSaveOrder() {
 
-        console.log(order_item_arr);
-        if (order_item_arr) {
-            /*console.log("null")*/
+        if (order_item_arr.length === 0) {
             alert("Please add the order details first !");
             return;
         }
-       // console.log("mot null")
 
-        /*saveOrderDB(new Order($('#order_id').text(), cus, order_item_arr, $('#date').text()));
+        saveOrderDB(new Order($('#order_id').text(), cus, order_item_arr, $('#date').text()));
 
         order_item_arr = [];
 
@@ -140,7 +207,7 @@ export class OrderController {
         $('#customer_contact').text(".");
 
         this.handleLoadTable();
-        this.handleOrderID();*/
+        this.handleOrderID();
     }
 
     handleLoadTable() {
@@ -158,13 +225,21 @@ export class OrderController {
                 "</tr>";
 
             $('#tbl').append(row);
+
         });
     }
 
     handleTableClickEvent() {
 
         $('table tbody').on('click', 'tr', (event) => {
-            $("#itemCodeCmb :selected").text($(event.target).closest('tr').find('td').eq(0).text());
+
+            var arr = document.getElementById('itemCodeCmb');
+            for (var i = 0; i < arr.length; i++){
+                if(arr[i].value === $(event.target).closest('tr').find('td').eq(0).text()){
+                    arr.selectedIndex = i;
+                }
+            }
+            selectedItemCode = $(event.target).closest('tr').find('td').eq(0).text();
             $('#des').text($(event.target).closest('tr').find('td').eq(1).text());
             $('#qty_on_hand').text($(event.target).closest('tr').find('td').eq(2).text());
             $('#unit_price').text($(event.target).closest('tr').find('td').eq(3).text());
@@ -174,8 +249,9 @@ export class OrderController {
 
             $('#addBtn').text('Update');
             $('#addBtn').css({
-                background: 'red', border: 'red'
+                background: '#5f27cd', border: '#5f27cd'
             });
+            document.getElementById('deleteBtn').style.display = "inline-block";
         });
     }
 
