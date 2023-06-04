@@ -12,13 +12,13 @@
         <div class="col-md-3" >
             <div>
                 <h5>Today Orders</h5>
-                <h6>55</h6>
+                <h6 id="todayOrders">55</h6>
             </div>
         </div>
         <div class="col-md-3 " >
             <div>
                 <h5>New Customers</h5>
-                <h6>10</h6>
+                <h6 id="totalCustomer">10</h6>
             </div>
         </div>
         <div class="col-md-3 " >
@@ -30,14 +30,14 @@
         <div class="col-md-3" >
             <div>
                 <h5>Today Earning</h5>
-                <h6>$ 187.5</h6>
+                <h6 id="todayIncome">$ 187.5</h6>
             </div>
         </div>
         <div class="col-12 p-0 ps-4">
             <h2>Recent Orders</h2>
         </div>
         <div class="col-12 mt-0">
-            <table class="table">
+            <table class="table" id="tbl">
                 <thead>
                 <th>Order ID</th>
                 <th>Customer Name</th>
@@ -46,68 +46,14 @@
                 <th>Unit Price</th>
                 <th>Total</th>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>C001</td>
-                    <td>Danapala</td>
-                    <td>Apple</td>
-                    <td>10</td>
-                    <td>100</td>
-                    <td>1000</td>
-                </tr>
-                <tr>
-                    <td>C002</td>
-                    <td>Gunapala</td>
-                    <td>Banana</td>
-                    <td>1</td>
-                    <td>250</td>
-                    <td>250</td>
-                </tr>
-                <tr>
-                    <td>C003</td>
-                    <td>Sampath</td>
-                    <td>Juse</td>
-                    <td>1</td>
-                    <td>100</td>
-                    <td>100</td>
-                </tr>
-                <tr>
-                    <td>C004</td>
-                    <td>Nimal</td>
-                    <td>Byte</td>
-                    <td>10</td>
-                    <td>50</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>C005</td>
-                    <td>Amarapala</td>
-                    <td>chocolate</td>
-                    <td>2</td>
-                    <td>100</td>
-                    <td>200</td>
-                </tr>
-                <tr>
-                    <td>C006</td>
-                    <td>Kasun</td>
-                    <td>Milk</td>
-                    <td>5</td>
-                    <td>100</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>C007</td>
-                    <td>Somapala</td>
-                    <td>Biscuit</td>
-                    <td>2</td>
-                    <td>250</td>
-                    <td>500</td>
-                </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </section>
     <br>
 </main>
+<script src="assets/lib/jquery-3.6.4.min.js"></script>
+<script src="controller/DashBoardController.js" type="module"></script>
+<script src="db/DB.js" type="module"></script>
 </body>
 </html>
