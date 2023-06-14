@@ -1,6 +1,7 @@
 import {Order} from "../models/Order.js";
 import {Order_Item} from "../models/Order_Item.js";
 import {getAllDB, saveOrderDB} from "../db/DB.js";
+import {handleRefreshAll} from "./DashBoardController.js";
 
 var order_item_arr = [];
 var cus;
@@ -124,7 +125,6 @@ export class OrderController {
 
         this.handleLoadTable();
         this.handleClearFunction();
-
     }
 
     handleAddItem(){
@@ -208,6 +208,7 @@ export class OrderController {
 
         this.handleLoadTable();
         this.handleOrderID();
+        handleRefreshAll();
     }
 
     handleLoadTable() {

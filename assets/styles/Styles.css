@@ -163,9 +163,6 @@ main > h1 {
     position: static;
 }
 
-.dash > div {
-    padding: 10px;
-}
 
 .dash > div > div {
     width: 100%;
@@ -216,6 +213,60 @@ main > h1 {
 }
 .dashMane > section > div:nth-child(4) > div{
     background-color: #38ada9;
+}
+.table>:not(:first-child) {
+    border-top: 2px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+table thead th{
+    text-align: center;
+    background: rgba(0, 0, 0, 0.06) !important;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: 'Roboto', sans-serif;
+    cursor: default;
+}
+table tbody tr td{
+    text-align: center;
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, 0.75);
+    text-transform: capitalize;
+}
+#orderDetailTbl tbody tr td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 0.8em;
+    width: 60px;
+    height: 28px;
+    border-radius: 25px;
+    text-decoration: none;
+    background: #00d2d3;
+}
+#orderDetailTbl tbody tr td:last-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#orderDetailTbl tbody tr td{
+    cursor: default !important;
+}
+#customerTbl tbody tr, #itemTbl tbody tr, #orderDetailTbl tbody tr{
+    cursor: pointer !important;
+}
+
+table tbody tr td, table tbody tr{
+    transition: ease-in-out 0.5s !important;
+ }
+table tbody tr:hover{
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+}
+table tbody tr:hover td{
+    color: rgba(0, 0, 0, 1);
+    transform: scale(1.05);
 }
 @media all and (max-width: 910px) {
     aside {

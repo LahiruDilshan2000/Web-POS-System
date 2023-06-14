@@ -13,20 +13,21 @@ export class DashBoardController {
         getAllDB("ORDER").map(value => {
 
             let count = value._itemArray.length;
-
+            let total = 0;
             for (let i = 0; i < count; i++) {
 
-                var row = "<tr>" +
-                    "<td>" + value._orderId + "</td>" +
-                    "<td>" + value._customer._id + "</td>" +
-                    "<td>" + value._itemArray[i]._item._description + "</td>" +
-                    "<td>" + value._itemArray[i]._qty + "</td>" +
-                    "<td>" + value._itemArray[i]._item._unitPrice + "</td>" +
-                    "<td>" + value._itemArray[i]._total + "</td>" +
-                    "</tr>";
-
-                $('#orderDetailTbl tbody').append(row);
+                total += value._itemArray[i]._total;
             }
+            var row = "<tr>" +
+                "<td>" + value._orderId + "</td>" +
+                "<td>" + value._customer._id + "</td>" +
+                "<td>" + value._customer._name + "</td>" +
+                "<td>" + total + "</td>" +
+                "<td>" + value._orderDate + "</td>" +
+                "<td><div>Payed</div></td>" +
+                "</tr>";
+
+            $('#orderDetailTbl tbody').prepend(row);
         });
     }
 
@@ -50,8 +51,13 @@ export class DashBoardController {
             }
         });
         $('#todayOrders').text(count);
-        $('#todayIncome').text("Rs  "+ todayIncome);
+        $('#todayIncome').text("Rs  " + todayIncome);
     }
 }
 
-new DashBoardController();
+export function handleRefreshAll() {
+    dashBoardController.handleLabelData();
+    dashBoardController.handleTableLoad();
+}
+
+let dashBoardController = new DashBoardController();
