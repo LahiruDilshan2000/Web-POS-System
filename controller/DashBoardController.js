@@ -25,7 +25,7 @@ export class DashBoardController {
                     "<td>" + value._itemArray[i]._total + "</td>" +
                     "</tr>";
 
-                $('#tbl tbody').append(row);
+                $('#orderDetailTbl tbody').append(row);
             }
         });
     }

@@ -17,13 +17,13 @@ export class OrderController {
         $('#itemCodeCmb').on('change', (event) => {
             this.handleItemDetails(event.target.value);
         });
-        $('#addBtn').on('click', () => {
+        $('#orderAddBtn').on('click', () => {
             this.handleValidation();
         });
         $('#placeOrderBtn').on('click', () => {
             this.handleSaveOrder();
         });
-        $('#deleteBtn').on('click', () => {
+        $('#orderDeleteBtn').on('click', () => {
             this.handleDeleteItem();
         });
 
@@ -64,7 +64,7 @@ export class OrderController {
             $('#customerCmb').append("<option>" + value._id + "</option>");
         });
 
-        document.getElementById('deleteBtn').style.display = "none";
+        document.getElementById('orderDeleteBtn').style.display = "none";
     }
 
     handleCustomerDetails(id) {
@@ -103,7 +103,7 @@ export class OrderController {
             $('#itemCodeCmb :selected').text() === "Choose..." ? (alert("Please select the item details !"), $('#itemCodeCmb').focus(), $('#itemCodeCmb').css({borderBottom: "2px solid red"})) :
                 !/\d+$/.test($('#qty').val()) ? (alert("Qty invalid or empty !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
                     $('#qty').val() > $('#qty_on_hand').text() ? (alert("Noo much qty left !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
-                        $('#addBtn').text() === 'Add' ?  this.handleAddItem() : this.handleUpdateItem();
+                        $('#orderAddBtn').text() === 'Add' ?  this.handleAddItem() : this.handleUpdateItem();
     }
 
     handleUpdateItem() {
@@ -120,7 +120,7 @@ export class OrderController {
 
         order_item_arr[index] = new Order_Item(itm, $('#qty').val(), $('#qty').val() * $('#unit_price').text());
 
-        $('#addBtn').text('Add'), $('#addBtn').css({background: '#0d6efd', border: '#0d6efd'});
+        $('#orderAddBtn').text('Add'), $('#addBtn').css({background: '#0d6efd', border: '#0d6efd'});
 
         this.handleLoadTable();
         this.handleClearFunction();
@@ -156,9 +156,9 @@ export class OrderController {
     handleClearFunction(){
 
         document.getElementById("itemCodeCmb").selectedIndex = 0;
-        document.getElementById('deleteBtn').style.display = "none";
-        $('#addBtn').text('Add');
-        $('#addBtn').css({background: '#0d6efd', border: '#0d6efd'});
+        document.getElementById('orderDeleteBtn').style.display = "none";
+        $('#orderAddBtn').text('Add');
+        $('#orderAddBtn').css({background: '#0d6efd', border: '#0d6efd'});
         $('#des').text('.');
         $('#qty_on_hand').text(".");
         $('#unit_price').text(".");
@@ -212,7 +212,7 @@ export class OrderController {
 
     handleLoadTable() {
 
-        $('table tbody tr').remove();
+        $('#orderTbl tbody tr').remove();
 
         order_item_arr.map((value) => {
             var row = "<tr>" +
@@ -224,14 +224,14 @@ export class OrderController {
                 "<td>" + value._total + "</td>" +
                 "</tr>";
 
-            $('#tbl').append(row);
+            $('#orderTbl tbody').append(row);
 
         });
     }
 
     handleTableClickEvent() {
 
-        $('table tbody').on('click', 'tr', (event) => {
+        $('#orderTbl tbody').on('click', 'tr', (event) => {
 
             var arr = document.getElementById('itemCodeCmb');
             for (var i = 0; i < arr.length; i++){
@@ -247,11 +247,11 @@ export class OrderController {
 
             index = order_item_arr.findIndex(value => value._item._itemCode === $("#itemCodeCmb :selected").text());
 
-            $('#addBtn').text('Update');
-            $('#addBtn').css({
+            $('#orderAddBtn').text('Update');
+            $('#orderAddBtn').css({
                 background: '#5f27cd', border: '#5f27cd'
             });
-            document.getElementById('deleteBtn').style.display = "inline-block";
+            document.getElementById('orderDeleteBtn').style.display = "inline-block";
         });
     }
 
