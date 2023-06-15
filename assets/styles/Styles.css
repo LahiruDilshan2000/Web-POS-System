@@ -20,7 +20,7 @@ header > div {
     height: 80px;
     background-color: white;
     position: fixed;
-    box-shadow: 0mm 0mm 8px #b2bec3;
+    box-shadow: 0 0 8px #b2bec3;
     z-index: 1000;
 }
 .nav-button{
@@ -31,13 +31,14 @@ header > div {
     top: 0;
     bottom: 0;
     margin: auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);*/
     cursor: pointer;
     border-radius: 8px;
     transition: ease-in-out 0.3s;
 }
 .nav-button:hover{
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    /*transform: scale(1.1);*/
 }
 .nav-button.clickNav:before{
     transform: rotate(-45deg);
@@ -293,6 +294,8 @@ aside nav ul li a{
 }
 #template{
     margin-top: 80px;
+    box-sizing: border-box;
+    width: 80%;
 }
 .mytext{
     height: fit-content;
@@ -385,7 +388,7 @@ table tbody tr:hover td{
     padding: 50px 0;
     transition: ease-in-out 0.5s;
     backdrop-filter: blur(0.2px);
-    /*opacity: 0;*/
+    opacity: 0;
 }
 .filter .all-d{
     width: 1000px;
@@ -426,6 +429,9 @@ table tbody tr:hover td{
 
     #divQty {
         width: 30%;
+    }
+    #template{
+        width: 100%;
     }
 }
 

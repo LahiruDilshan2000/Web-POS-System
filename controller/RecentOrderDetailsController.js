@@ -62,7 +62,7 @@ export class RecentOrderDetailsController{
                         "<td>" + value1._item._description + "</td>" +
                         "<td>" + value1._item._unitPrice + "</td>" +
                         "<td>" + value1._qty+ "</td>" +
-                        "<td>" + value._total + "</td>" +
+                        "<td>" + value1._total + "</td>" +
                         "</tr>";
 
                     $('#recentTbl tbody').prepend(row);

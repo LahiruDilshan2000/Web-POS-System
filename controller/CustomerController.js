@@ -13,6 +13,13 @@ export class CustomerController {
         $('#cusDeleteBtn').on('click', () => {
             this.handleValidation("Delete");
         });
+        $('#cusSearchBtn').on('click', () => {
+            this.handleSearchCustomer();
+        });
+        $('#cusSearch').on('keyup', () => {
+
+        });
+        this.handleLReloadCustomerDetails();
         // this.handleSaveCustomer.bind(this);
         this.handleLoadCustomer();
         this.handleTableClickEvent();
@@ -106,5 +113,49 @@ export class CustomerController {
             document.getElementById('cusDeleteBtn').disabled = false;
         });
     }
+
+    handleSearchCustomer() {
+
+        let array = [];
+        let text = $('#cusSearch').val().toLowerCase();
+
+        getAllDB("DATA").map(value => {
+
+            value._id.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                value._name.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                    value._address.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                        value._contact.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                            this.handleSearchCustomerLoad(array);
+        });
+    }
+
+    handleSearchCustomerLoad(array) {
+
+        if (array) {
+            $('#customerTbl tbody tr td').remove();
+
+            array.map((value) => {
+                var row = "<tr>" +
+                    "<td>" + value._id + "</td>" +
+                    "<td>" + value._name + "</td>" +
+                    "<td>" + value._address + "</td>" +
+                    "<td>" + value._contact + "</td>" +
+                    "</tr>";
+
+                $('#customerTbl tbody').append(row);
+            });
+        }
+    }
+
+
+    handleLReloadCustomerDetails() {
+
+        $(document).on('click', (event) => {
+            console.log($('#cusSearch').val());
+            if(!$('#cusSearch').val()) this.handleLoadCustomer();
+        });
+
+    }
 }
+
 new CustomerController();
