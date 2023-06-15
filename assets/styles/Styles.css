@@ -1,12 +1,13 @@
 body {
     margin: 0;
-    background-color: #dfe4ea !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 main {
     display: flex;
     padding-top: 10px;
     height: fit-content;
+    position: relative;
 }
 
 .template {
@@ -18,9 +19,61 @@ header > div {
     width: 100%;
     height: 80px;
     background-color: white;
-    position: relative;
+    position: fixed;
     box-shadow: 0mm 0mm 8px #b2bec3;
-
+    z-index: 1000;
+}
+.nav-button{
+    width: 40px;
+    height: 36px;
+    position: absolute;
+    right: 50px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: ease-in-out 0.3s;
+}
+.nav-button:hover{
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+.nav-button.clickNav:before{
+    transform: rotate(-45deg);
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.nav-button.clickNav:after{
+    transform: rotate(45deg);
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.nav-button:after{
+    content: "";
+    width: 75%;
+    height: 3px;
+    background: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: all 0.5s;
+}
+.nav-button:before{
+    content: "";
+    width: 75%;
+    height: 3px;
+    background: rgba(0, 0, 0, 1);
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transition: all 0.4s;
 }
 header > div > h1 {
     position: absolute;
@@ -37,6 +90,7 @@ aside {
     width: 20%;
     height: 80vh;
     position: fixed;
+    margin-top: 60px;
 }
 
 nav {
@@ -60,7 +114,6 @@ aside > nav a {
     margin-bottom: 6px;
     margin-top: 10px;
     position: relative;
-
 }
 
 i {
@@ -91,6 +144,42 @@ a:hover {
     background-color: #7f8fa6 !important;
     color: white !important;
     box-shadow: 2px 2px 8px gray;
+}
+
+.responsive-nav{
+    position: fixed;
+    right: 0;
+    top: -180px;
+    margin: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 1);
+    z-index: 500;
+    transition: ease-in-out 0.5s;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+}
+.responsive-nav.click{
+    top: 80px;
+}
+.responsive-nav ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.responsive-nav ul li a{
+    display: flex;
+    text-decoration: none;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    width: 100%;
+    padding-left: 80px;
+    height: 50px;
+    align-items: center;
+    transition: ease-in-out 0.3s;
+}
+.responsive-nav ul li a:hover{
+    letter-spacing: 5px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 1);
 }
 
 main > div {
@@ -148,14 +237,20 @@ main > h1 {
     font-size: 30px;
 }
 
-#search {
+.search {
     width: 250px !important;
-    margin-left: 10px;
+    margin-right: 10px;
+}
+button[type='button']{
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .dashMane {
     display: block;
     width: 100%;
+}
+aside nav ul li a{
+    transition: all 0.5s;
 }
 
 .dash {
@@ -196,6 +291,9 @@ main > h1 {
     right: 0;
     margin: auto;
 }
+#template{
+    margin-top: 80px;
+}
 .mytext{
     height: fit-content;
 }
@@ -233,7 +331,7 @@ table tbody tr td{
     color: rgba(0, 0, 0, 0.75);
     text-transform: capitalize;
 }
-#orderDetailTbl tbody tr td div {
+#orderDetailTbl tbody tr td div, #recentOrderTbl tbody tr td div  {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,7 +344,11 @@ table tbody tr td{
     text-decoration: none;
     background: #00d2d3;
 }
-#orderDetailTbl tbody tr td:last-child{
+#recentOrderTbl tbody tr td div {
+    background: red;
+    cursor: pointer;
+}
+#orderDetailTbl tbody tr td:last-child, #recentOrderTbl tbody tr td:last-child{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -267,6 +369,36 @@ table tbody tr:hover{
 table tbody tr:hover td{
     color: rgba(0, 0, 0, 1);
     transform: scale(1.05);
+}
+.filter{
+    width: 100%;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: -200vw;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 5000;
+    justify-content: center;
+    display: flex;
+    padding: 50px 0;
+    transition: ease-in-out 0.5s;
+    backdrop-filter: blur(0.2px);
+    /*opacity: 0;*/
+}
+.filter .all-d{
+    width: 1000px;
+    background: rgba(255, 255, 255, 1);
+    padding: 20px;
+    border-radius: 20px;
+}
+.filter .all-d .details{
+    height: fit-content;
+    margin: 0;
+    padding: 20px 0;
+
+
 }
 @media all and (max-width: 910px) {
     aside {

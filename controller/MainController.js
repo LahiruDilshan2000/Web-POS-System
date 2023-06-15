@@ -16,6 +16,14 @@ export class MainController{
         $('#ord').on('click', () => {
             this.handleShowContainer('.orderDetailMane', 'ord');
         });
+        $('header > div > .nav-button.clickNav').on('click', () => {
+            console.log("wdadaw")
+            this.handleNavigationClassRemove();
+        });
+        $('.nav-button').on('click', () => {
+            this.handleNavigationClassAdd();
+        });
+
         this.handleAllHide();
         this.handleShowContainer('.dashMane', 'dash');
     }
@@ -32,6 +40,19 @@ export class MainController{
 
         this.handleAllHide();
         $(container).css({display: 'block'});
+    }
+
+    handleNavigationClassAdd(){
+
+        $('.responsive-nav').addClass('click');
+        $('.nav-button').addClass('clickNav');
+    }
+
+    handleNavigationClassRemove(){
+
+        console.log("wadwad")
+        $('.responsive-nav').removeClass('click');
+        $('.nav-button').removeClass('clickNav');
     }
 }
 new MainController();

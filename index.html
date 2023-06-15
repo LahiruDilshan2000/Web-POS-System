@@ -12,9 +12,21 @@
 </head>
 <body>
 <header>
-    <div><h1 id="header-h1"><i class="fa-solid fa-sleigh"></i> My POS System</h1></div>
+    <div>
+        <h1 id="header-h1"><i class="fa-solid fa-sleigh"></i> My POS System</h1>
+        <div class="nav-button"></div>
+    </div>
 </header>
 <main>
+    <nav class="responsive-nav">
+        <ul>
+            <li><a href="#" id="r-dash">DashBoard</a></li>
+            <li><a href="#" id="r-cus">Customer</a></li>
+            <li><a href="#" id="r-itm">Item</a></li>
+            <li><a href="#" id="r-or">Order</a></li>
+            <li><a href="#" id="r-ord">Order Details</a></li>
+        </ul>
+    </nav>
     <aside>
         <nav>
             <ul>
@@ -106,7 +118,8 @@
             </form>
             <br>
             <form class="d-flex" role="search">
-                <input class="form-control me-2 was-validated " type="search" placeholder="Search" aria-label="Search"
+                <input class="form-control me-2 was-validated search" type="search" placeholder="Search"
+                       aria-label="Search"
                        id="cusSearch">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -154,7 +167,8 @@
             </form>
             <br>
             <form class="d-flex" role="search">
-                <input class="form-control me-2 was-validated " type="search" placeholder="Search" aria-label="Search"
+                <input class="form-control me-2 was-validated search" type="search" placeholder="Search"
+                       aria-label="Search"
                        id="itmSearch">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -262,17 +276,59 @@
         </section>
         <!--------------------Recent Order Details Form--------------------------------->
         <section class="orderDetailMane">
+            <div class="filter">
+                <div class="all-d">
+                    <form class="row g-3 details">
+                        <div class="row col-12">
+                            <div class="col-3">
+                                <label class="form-label">Order ID</label>
+                                <label class="form-control" id="recentOrder_id">&nbsp;</label>
+                            </div>
+                            <div class="col-3">
+                                <label class="form-label">Date</label>
+                                <label class="form-control" id="recentOrderDate"></label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Customer ID</label>
+                                <label class="form-control" id="cusID">&nbsp;</label>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Name</label>
+                                <label class="form-control" id="cusName">&nbsp;</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-12 mt-4">
+                        <table class="table" id="recentTbl">
+                            <thead>
+                            <th>Item Code</th>
+                            <th>Item Des</th>
+                            <th>Unit price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <section class="dash row g-3 m-0">
                 <h1 class="col-12 mt-0">Recent Order Details</h1>
-                <div class="col-12 mt-0">
-                    <table class="table" id="tbl">
+                <form class="d-flex" role="search">
+                    <input class="form-control was-validated search" type="search" placeholder="Search"
+                           aria-label="Search"
+                           id="recentOrderSearch">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <div class="col-12 mt-4">
+                    <table class="table" id="recentOrderTbl">
                         <thead>
                         <th>Order ID</th>
                         <th>Customer ID</th>
                         <th>Customer Name</th>
                         <th>Total</th>
                         <th>Date</th>
-                        <th>Status</th>
+                        <th>Option</th>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -287,6 +343,7 @@
 <script src="controller/CustomerController.js" type="module"></script>
 <script src="controller/ItemController.js" type="module"></script>
 <script src="controller/OrderController.js" type="module"></script>
+<script src="controller/RecentOrderDetailsController.js" type="module"></script>
 <script src="db/DB.js" type="module"></script>
 <script>
 

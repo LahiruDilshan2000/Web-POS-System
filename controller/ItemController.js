@@ -98,7 +98,7 @@ export class ItemController{
             $('#qty').val($(event.target).closest('tr').find('td').eq(3).text())
 
             document.getElementById('itmSaveBtn').disabled = true;
-            document.getElementById('itemCode').disabled = true;
+            document.getElementById('itmCode').disabled = true;
             document.getElementById('itmUpdateBtn').disabled = false;
             document.getElementById('itmDeleteBtn').disabled = false;
         });
