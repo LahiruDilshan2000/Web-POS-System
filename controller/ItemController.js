@@ -12,7 +12,7 @@ export class ItemController{
         $('#itmDeleteBtn').on('click', () => {
             this.handleValidation("Delete");
         });
-        $('#itmSaveBtn').on('click', () => {
+        $('#itmSearchBtn').on('click', () => {
             this.handleSearchItem();
         });
         $('#itmSearch').on('keyup', () => {
@@ -25,7 +25,7 @@ export class ItemController{
 
     handleValidation(Function) {
 
-        !/^(R)([0-9]{2,})$/.test($('#itemCode').val()) ? alert("Invalid Item code") : !$('#itmDes').val() ? alert("Description is empty !") :
+        !/^(R)([0-9]{2,})$/.test($('#itmCode').val()) ? alert("Invalid Item code") : !$('#itmDes').val() ? alert("Description is empty !") :
             !/\d+$/.test($('#unitPrice').val()) ? alert("Invalid unit price or empty !") : !/^\d+$/.test($('#itmQty').val()) ? alert("Invalid qty or empty !") :
                 Function === "Save" ? this.handleSaveItem() : Function === "Update" ? this.handleUpdateItem() :
                     this.handleDeleteItem();
@@ -37,21 +37,21 @@ export class ItemController{
             alert("Item code all ready exists !");
             return;
         }
-        saveItemDB(new Item($('#itemCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
+        saveItemDB(new Item($('#itmCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
 
         this.handleLoadItem(getAllDB("ITEM"));
     }
 
     handleUpdateItem(){
 
-        updateItemDB(new Item($('#itemCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
+        updateItemDB(new Item($('#itmCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
 
         this.handleLoadItem(getAllDB("ITEM"));
     }
 
     handleDeleteItem(){
 
-        deleteItemDB(new Item($('#itemCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
+        deleteItemDB(new Item($('#itmCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
 
         this.handleLoadItem(getAllDB("ITEM"));
     }
@@ -77,7 +77,7 @@ export class ItemController{
         document.getElementById('itmDeleteBtn').disabled = true;
 
         //clearData();
-        $('#itemCode').val("");
+        $('#itmCode').val("");
         $('#itmDes').val("");
         $('#unitPrice').val("");
         $('#itmQty').val("");
@@ -89,7 +89,7 @@ export class ItemController{
 
         let flag = false;
         getAllDB("ITEM").filter((event) => {
-            if (event._itemCode === $('#itemCode').val()) {
+            if (event._itemCode === $('#itmCode').val()) {
                 flag = true;
             }
         });
@@ -99,10 +99,10 @@ export class ItemController{
     handleTableClickEvent(){
 
         $('#itemTbl tbody').on('click', 'tr', (event) => {
-            $('#itemCode').val($(event.target).closest('tr').find('td').eq(0).text())
-            $('#des').val($(event.target).closest('tr').find('td').eq(1).text())
+            $('#itmCode').val($(event.target).closest('tr').find('td').eq(0).text())
+            $('#itmDes').val($(event.target).closest('tr').find('td').eq(1).text())
             $('#unitPrice').val($(event.target).closest('tr').find('td').eq(2).text())
-            $('#qty').val($(event.target).closest('tr').find('td').eq(3).text())
+            $('#itmQty').val($(event.target).closest('tr').find('td').eq(3).text())
 
             document.getElementById('itmSaveBtn').disabled = true;
             document.getElementById('itmCode').disabled = true;

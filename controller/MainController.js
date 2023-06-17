@@ -1,4 +1,4 @@
-export class MainController{
+export class MainController {
 
     constructor() {
         $('#dash').on('click', () => {
@@ -16,19 +16,14 @@ export class MainController{
         $('#ord').on('click', () => {
             this.handleShowContainer('.orderDetailMane', 'ord');
         });
-        $('header > div > .nav-button.clickNav').on('click', () => {
-            console.log("wdadaw")
-            this.handleNavigationClassRemove();
+        $('#nav-button').on('click', (event) => {
+            this.handleNavigationClassAddOrRemove(event);
         });
-        $('.nav-button').on('click', () => {
-            this.handleNavigationClassAdd();
-        });
-
         this.handleAllHide();
         this.handleShowContainer('.dashMane', 'dash');
     }
 
-    handleAllHide(){
+    handleAllHide() {
 
         $('.dashMane').css({display: 'none'});
         $('.cusMane').css({display: 'none'});
@@ -36,23 +31,36 @@ export class MainController{
         $('.orderMane').css({display: 'none'});
         $('.orderDetailMane').css({display: 'none'});
     }
-    handleShowContainer(container, btn){
 
+    handleShowContainer(container, btn) {
+
+        $('.click').removeClass('click');
         this.handleAllHide();
         $(container).css({display: 'block'});
+        $('#' + btn).addClass('click');
+        this.handlePageCaption(btn);
     }
 
-    handleNavigationClassAdd(){
+    handlePageCaption(btn){
 
-        $('.responsive-nav').addClass('click');
-        $('.nav-button').addClass('clickNav');
+        btn === 'dash' ? $('#page-header').text("Dash board") :
+            btn === 'cus' ? $('#page-header').text("Customer Manage"):
+                btn === 'itm' ? $('#page-header').text("Item Manage"):
+                    btn === 'or' ? $('#page-header').text("Order Manage"):
+                         $('#page-header').text("Recent Orders Details");
     }
 
-    handleNavigationClassRemove(){
+    handleNavigationClassAddOrRemove(event) {
 
-        console.log("wadwad")
+        if (!event.target.className) {
+            $('.responsive-nav').addClass('click');
+            $('#nav-button').addClass('clickNav');
+            return;
+        }
         $('.responsive-nav').removeClass('click');
-        $('.nav-button').removeClass('clickNav');
+        $('#nav-button').removeClass('clickNav');
+
     }
 }
+
 new MainController();

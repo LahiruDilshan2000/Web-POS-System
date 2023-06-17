@@ -12,8 +12,9 @@
 </head>
 <body>
 <header>
-    <div>
-        <div class="nav-button"></div>
+    <div class="inner">
+        <h1 id="page-header">wadwadwadwa</h1>
+        <div id="nav-button"></div>
     </div>
 </header>
 <main>
@@ -44,33 +45,30 @@
         <section class="dashMane">
             <section class="dash row g-3 m-0" p-0>
                 <div class="col-md-3">
-                    <div>
+                    <div class="dash-div">
                         <h5>Today Orders</h5>
                         <h6 id="todayOrders">55</h6>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div>
+                    <div class="dash-div">
                         <h5>New Customers</h5>
                         <h6 id="totalCustomer">10</h6>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div>
+                    <div class="dash-div">
                         <h5>Monthly Income</h5>
                         <h6>$ 4,562.5</h6>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div>
+                    <div class="dash-div">
                         <h5>Today Earning</h5>
                         <h6 id="todayIncome">$ 187.5</h6>
                     </div>
                 </div>
-                <div class="col-12 p-0">
-                    <h1>Recent Orders</h1>
-                </div>
-                <div class="col-12 mt-0 p-0">
+                <div class="col-12 mt-0 pt-4">
                     <table class="table" id="orderDetailTbl">
                         <thead>
                         <th>Order ID</th>
@@ -87,9 +85,8 @@
         </section>
         <!--------------------Customer Form--------------------------------->
         <section class="cusMane">
-            <h1>Customer Management</h1>
             <form class="row g-3 myform ">
-                <div class="col-m-0">
+                <div class="col-md-6">
                     <label class="form-label">Customer ID</label>
                     <input type="text" name="id" class="form-control" id="id" placeholder="C001">
                 </div>
@@ -97,11 +94,11 @@
                     <label class="form-label">Name</label>
                     <input type="text" name="name" class="form-control" id="name" placeholder="Danapala">
                 </div>
-                <div class="col-12">
+                <div class="col-md-6">
                     <label class="form-label">Address</label>
                     <input type="text" name="address" class="form-control" id="address" placeholder="1234 Main St">
                 </div>
-                <div class="col-12">
+                <div class="col-md-6">
                     <label class="form-label">Contact </label>
                     <input type="tel" name="tel" class="form-control" id="tel" placeholder="+94 xxx xxxx">
                 </div>
@@ -120,7 +117,6 @@
                 <button class="btn btn-outline-success" id="cusSearchBtn" type="button">Search</button>
             </form>
             <br>
-
             <form class="row g-3 p-2">
                 <table class="table" id="customerTbl">
                     <thead>
@@ -136,7 +132,6 @@
         </section>
         <!--------------------Item Form--------------------------------->
         <section class="itemMane">
-            <h1>Item Management</h1>
             <form class="row g-3 myform">
                 <div class="col-md-6">
                     <label class="form-label">Item Code</label>
@@ -166,7 +161,7 @@
                 <input class="form-control me-2 was-validated search" type="search" placeholder="Search"
                        aria-label="Search"
                        id="itmSearch">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" type="button" id="itmSearchBtn">Search</button>
             </form>
             <br>
             <form class="row g-3 p-2">
@@ -184,7 +179,6 @@
         </section>
         <!--------------------Order Form--------------------------------->
         <section class="orderMane">
-            <h1>Place Order</h1>
             <form class="row g-3 myform">
                 <div class="row col-12">
                     <div class="col-3">
@@ -309,7 +303,6 @@
                 </div>
             </div>
             <section class="dash row g-3 m-0">
-                <h1 class="col-12 mt-0">Recent Order Details</h1>
                 <form class="d-flex" role="search">
                     <input class="form-control was-validated search" type="search" placeholder="Search"
                            aria-label="Search"

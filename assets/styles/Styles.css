@@ -13,18 +13,29 @@ header {
     width: 100%;
     position: fixed;
     z-index: 1000;
-    background: rgba(255, 255, 255, 1);
+    height: 70px;
     padding-left: 220px;
 }
-
-header > div {
+header .inner{
     width: 100%;
-    height: 70px;
-    padding: 10px;
+    height: 100%;
+    background: rgba(255, 255, 255, 1);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: end;
 }
 
-.nav-button {
+#page-header{
+    margin: 0;
+    font-size: 1.5em;
+    padding: 5px 10px;
+    border-bottom: 3px solid #00d2d3;
+    color: rgba(0, 0, 0, 0.7);
+    letter-spacing: 1px;
+    transition: all 0.5s;
+}
+
+#nav-button {
     width: 40px;
     height: 36px;
     position: absolute;
@@ -34,29 +45,28 @@ header > div {
     margin: auto;
     cursor: pointer;
     border-radius: 8px;
-    transition: ease-in-out 0.3s;
+    display: none;
 }
 
-.nav-button:hover {
+#nav-button:hover {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-    /*transform: scale(1.1);*/
 }
 
-.nav-button.clickNav:before {
+#nav-button.clickNav:before {
     transform: rotate(-45deg);
     top: 0;
     bottom: 0;
     margin: auto;
 }
 
-.nav-button.clickNav:after {
+#nav-button.clickNav:after {
     transform: rotate(45deg);
     top: 0;
     bottom: 0;
     margin: auto;
 }
 
-.nav-button:after {
+#nav-button:after {
     content: "";
     width: 75%;
     height: 3px;
@@ -66,10 +76,10 @@ header > div {
     left: 0;
     right: 0;
     margin: auto;
-    transition: all 0.5s;
+    /*transition: all 0.5s;*/
 }
 
-.nav-button:before {
+#nav-button:before {
     content: "";
     width: 75%;
     height: 3px;
@@ -79,7 +89,7 @@ header > div {
     left: 0;
     right: 0;
     margin: auto;
-    transition: all 0.4s;
+    /*transition: all 0.4s;*/
 }
 
 aside {
@@ -95,18 +105,16 @@ aside {
 aside nav {
     width: 100%;
 }
-
 #nav-h1{
-    color: rgba(255, 255, 255, 1);
     position: absolute;
     top: 0;
-    padding-left: 20px;
-    width: 100%;
-    height: fit-content;
+    color: rgba(255, 255, 255, 1);
     font-size: 2.5em;
+    padding-left: 20px;
     letter-spacing: 5px;
     font-weight: bolder;
 }
+
 #nav-h1 span{
     color: #00d2d3;
     letter-spacing: 5px;
@@ -148,9 +156,13 @@ aside > nav > ul {
 }
 
 aside nav ul li a:hover {
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.4) 40%, transparent) ;
+    color: rgba(255, 255, 255, 0.8);
+}
+aside nav ul li .click{
     background: rgba(0, 0, 0, 1);
     color: rgba(255, 255, 255, 1);
-    /*border-left: 5px solid #00d2d3;*/
+    border-left: 6px solid #00d2d3;
 }
 
 .responsive-nav {
@@ -160,7 +172,7 @@ aside nav ul li a:hover {
     margin: 0;
     width: 100%;
     background: rgba(255, 255, 255, 1);
-    z-index: 500;
+    z-index: 1400;
     transition: ease-in-out 0.5s;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
@@ -200,8 +212,7 @@ aside nav ul li a:hover {
 }
 
 .myform {
-    /*margin-top: 5px !important;*/
-    margin: 5px 20px !important;
+    margin: 5px 10px !important;
     border-radius: 10px;
     padding: 20px;
     border: 1px solid #CFCFCF;
@@ -238,52 +249,41 @@ button[type='button'] {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.dashMane {
-    display: block;
-    width: 100%;
-}
-
 aside nav ul li a {
     transition: all 0.5s;
 }
 
-.dash {
-    width: 100%;
-    position: static;
+.col-md-3{
+    padding: 0 15px !important;
 }
 
-
-.dash > div > div {
+.dash-div{
     width: 100%;
-    height: 150px;
+    min-height: 150px;
     border-radius: 20px;
-    border: 0.5px solid #CFCFCF;
-    box-shadow: 1mm 1mm 8px #c8d6e5;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
     color: #485460;
     position: relative;
+    text-align: center;
+    padding: 25px 10px;
+    color: rgba(255,255, 255, 1);
+    transition: ease-in-out 0.5s;
 }
 
-.dash > div > div > h5 {
-    color: white;
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
-    top: 25%;
-    left: 0;
-    right: 0;
-    margin: auto;
+.dash-div:hover{
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-.dash > div > div > h6 {
-    font-size: 22px;
-    color: white;
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    margin: auto;
+.dash-div h5 {
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dash-div h6 {
+    color: rgba(255,255, 255, 0.8);
+    padding-top: 5px;
+    font-size: 1.4em;
 }
 
 #template {
