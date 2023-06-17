@@ -12,9 +12,10 @@ main {
 header {
     width: 100%;
     position: fixed;
-    z-index: 1000;
+    z-index: 1400;
     height: 70px;
     padding-left: 220px;
+    background: rgba(255, 255, 255, 1);
 }
 header .inner{
     width: 100%;
@@ -52,14 +53,14 @@ header .inner{
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 }
 
-#nav-button.clickNav:before {
+#nav-button.click:before {
     transform: rotate(-45deg);
     top: 0;
     bottom: 0;
     margin: auto;
 }
 
-#nav-button.clickNav:after {
+#nav-button.click:after {
     transform: rotate(45deg);
     top: 0;
     bottom: 0;
@@ -97,7 +98,7 @@ aside {
     height: 100vh;
     background: rgba(0, 0, 0, 0.85);
     position: fixed;
-    z-index: 1000;
+    z-index: 1500;
     display: flex;
     align-items: center;
 }
@@ -168,43 +169,48 @@ aside nav ul li .click{
 .responsive-nav {
     position: fixed;
     right: 0;
-    top: -180px;
+    top: -200px;
     margin: 0;
     width: 100%;
     background: rgba(255, 255, 255, 1);
-    z-index: 1400;
+    z-index: 1300;
     transition: ease-in-out 0.5s;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
 }
 
 .responsive-nav.click {
-    top: 80px;
-    opacity: 1;
+    top: 70px;
 }
 
 .responsive-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    background: rgba(0, 0, 0, 0.85);
 }
 
 .responsive-nav ul li a {
     display: flex;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1em;
     letter-spacing: 2px;
     width: 100%;
-    padding-left: 80px;
-    height: 50px;
+    padding-left: 20px;
+    height: 40px;
     align-items: center;
     transition: ease-in-out 0.3s;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .responsive-nav ul li a:hover {
-    letter-spacing: 5px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 1);
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.4) 40%, transparent) ;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.responsive-nav ul li .click{
+    background: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    border-left: 6px solid #00d2d3;
 }
 
 .btn {
@@ -438,9 +444,19 @@ table tbody tr:hover td {
 
 }
 
-@media all and (max-width: 910px) {
+@media all and (max-width: 850px) {
     aside {
         display: none;
+    }
+    #nav-button{
+        display: inline-block;
+    }
+    header{
+        padding-left: 0;
+    }
+
+    #template{
+        padding-left: 0;
     }
 
     main > div {

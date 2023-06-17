@@ -16,6 +16,21 @@ export class MainController {
         $('#ord').on('click', () => {
             this.handleShowContainer('.orderDetailMane', 'ord');
         });
+        $('#r-dash').on('click', () => {
+            this.handleShowContainer('.dashMane', 'dash');
+        });
+        $('#r-cus').on('click', () => {
+            this.handleShowContainer('.cusMane', 'cus');
+        });
+        $('#r-itm').on('click', () => {
+            this.handleShowContainer('.itemMane', 'itm');
+        });
+        $('#r-or').on('click', () => {
+            this.handleShowContainer('.orderMane', 'or');
+        });
+        $('#r-ord').on('click', () => {
+            this.handleShowContainer('.orderDetailMane', 'ord');
+        });
         $('#nav-button').on('click', (event) => {
             this.handleNavigationClassAddOrRemove(event);
         });
@@ -38,6 +53,7 @@ export class MainController {
         this.handleAllHide();
         $(container).css({display: 'block'});
         $('#' + btn).addClass('click');
+        $('#r-' + btn).addClass('click');
         this.handlePageCaption(btn);
     }
 
@@ -54,11 +70,11 @@ export class MainController {
 
         if (!event.target.className) {
             $('.responsive-nav').addClass('click');
-            $('#nav-button').addClass('clickNav');
+            $('#nav-button').addClass('click');
             return;
         }
         $('.responsive-nav').removeClass('click');
-        $('#nav-button').removeClass('clickNav');
+        $('#nav-button').removeClass('click');
 
     }
 }
