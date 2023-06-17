@@ -1,29 +1,30 @@
 body {
     margin: 0;
-    background-color: rgba(0, 0, 0, 0.05) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 main {
     display: flex;
-    padding-top: 10px;
     height: fit-content;
     position: relative;
 }
 
-.template {
-    display: block;
-
+header {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 1);
+    padding-left: 220px;
 }
 
 header > div {
     width: 100%;
-    height: 80px;
-    background-color: white;
-    position: fixed;
-    box-shadow: 0 0 8px #b2bec3;
-    z-index: 1000;
+    height: 70px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
-.nav-button{
+
+.nav-button {
     width: 40px;
     height: 36px;
     position: absolute;
@@ -31,28 +32,31 @@ header > div {
     top: 0;
     bottom: 0;
     margin: auto;
-    /*box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);*/
     cursor: pointer;
     border-radius: 8px;
     transition: ease-in-out 0.3s;
 }
-.nav-button:hover{
+
+.nav-button:hover {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
     /*transform: scale(1.1);*/
 }
-.nav-button.clickNav:before{
+
+.nav-button.clickNav:before {
     transform: rotate(-45deg);
     top: 0;
     bottom: 0;
     margin: auto;
 }
-.nav-button.clickNav:after{
+
+.nav-button.clickNav:after {
     transform: rotate(45deg);
     top: 0;
     bottom: 0;
     margin: auto;
 }
-.nav-button:after{
+
+.nav-button:after {
     content: "";
     width: 75%;
     height: 3px;
@@ -64,7 +68,8 @@ header > div {
     margin: auto;
     transition: all 0.5s;
 }
-.nav-button:before{
+
+.nav-button:before {
     content: "";
     width: 75%;
     height: 3px;
@@ -76,78 +81,79 @@ header > div {
     margin: auto;
     transition: all 0.4s;
 }
-header > div > h1 {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    height: fit-content;
-    color: #485460;
-    font-size: 30px;
-    transition: 0.3s;
-}
 
 aside {
-    width: 20%;
-    height: 80vh;
+    width: 220px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
     position: fixed;
-    margin-top: 60px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
 }
 
-nav {
+aside nav {
+    width: 100%;
+}
+
+#nav-h1{
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    top: 0;
+    padding-left: 20px;
     width: 100%;
     height: fit-content;
+    font-size: 2.5em;
+    letter-spacing: 5px;
+    font-weight: bolder;
+}
+#nav-h1 span{
+    color: #00d2d3;
+    letter-spacing: 5px;
+}
+#nav-h3{
+    color: rgba(255, 255, 255, 0.8);
     position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-}
-
-aside > nav a {
-    text-decoration: none;
-    font-size: 20px;
-    color: #485460;
-    width: 88%;
-    height: 50px;
-    display: inline-block;
-    border-radius: 4px;
-    margin-left: 15px;
-    margin-bottom: 6px;
-    margin-top: 10px;
-    position: relative;
-}
-
-i {
-    margin-right: 10px;
-    margin-left: 20px;
-}
-
-span {
+    bottom: 10px;
+    padding-left: 20px;
+    width: 100%;
     height: fit-content;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    left: 10px;
+    font-size: 0.6em;
+    letter-spacing: 2px;
+    font-weight: 300;
+    line-height: 13px;
 }
 
 aside > nav ul li {
+    list-style: none;
+}
+
+aside nav ul li a {
     text-decoration: none;
-    display: block;
-    position: relative;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: start;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+    font-weight: 300;
+    font-size: 1em;
 }
 
 aside > nav > ul {
     padding: 0;
+    margin: 0;
 }
 
-a:hover {
-    background-color: #7f8fa6 !important;
-    color: white !important;
-    box-shadow: 2px 2px 8px gray;
+aside nav ul li a:hover {
+    background: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    /*border-left: 5px solid #00d2d3;*/
 }
 
-.responsive-nav{
+.responsive-nav {
     position: fixed;
     right: 0;
     top: -180px;
@@ -157,16 +163,21 @@ a:hover {
     z-index: 500;
     transition: ease-in-out 0.5s;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
 }
-.responsive-nav.click{
+
+.responsive-nav.click {
     top: 80px;
+    opacity: 1;
 }
-.responsive-nav ul{
+
+.responsive-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-.responsive-nav ul li a{
+
+.responsive-nav ul li a {
     display: flex;
     text-decoration: none;
     font-size: 1.2em;
@@ -177,27 +188,11 @@ a:hover {
     align-items: center;
     transition: ease-in-out 0.3s;
 }
-.responsive-nav ul li a:hover{
+
+.responsive-nav ul li a:hover {
     letter-spacing: 5px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
     background: rgba(255, 255, 255, 1);
-}
-
-main > div {
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 79%;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0.5mm 0.5mm 8px #b2bec3;
-    position: absolute;
-    right: 0;
-}
-
-a:focus {
-    /*background-color: #0652DD;
-    color: white;
-    box-shadow: 2px 2px 8px gray;*/
 }
 
 .btn {
@@ -205,15 +200,11 @@ a:focus {
 }
 
 .myform {
-    margin-top: 10px;
-    margin-left: 50px;
-    margin-right: 50px;
-    border-radius: 20px;
-    border: 0.5px solid #CFCFCF;
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 20px;
+    /*margin-top: 5px !important;*/
+    margin: 5px 20px !important;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #CFCFCF;
     box-shadow: 0mm 0mm 8px #E4E4E4;
 }
 
@@ -242,7 +233,8 @@ main > h1 {
     width: 250px !important;
     margin-right: 10px;
 }
-button[type='button']{
+
+button[type='button'] {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -250,7 +242,8 @@ button[type='button']{
     display: block;
     width: 100%;
 }
-aside nav ul li a{
+
+aside nav ul li a {
     transition: all 0.5s;
 }
 
@@ -270,7 +263,7 @@ aside nav ul li a{
     position: relative;
 }
 
-.dash > div > div > h5{
+.dash > div > div > h5 {
     color: white;
     width: fit-content;
     height: fit-content;
@@ -292,49 +285,81 @@ aside nav ul li a{
     right: 0;
     margin: auto;
 }
-#template{
-    margin-top: 80px;
+
+#template {
     box-sizing: border-box;
-    width: 80%;
-}
-.mytext{
-    height: fit-content;
-}
-.dashMane > section > div > h2{
-    color: #485460;
-}
-.dashMane > section > div:first-child > div{
-    background-color: #ff3838;
-}
-.dashMane > section > div:nth-child(2) > div{
-    background-color: #2e86de;
-}
-.dashMane > section > div:nth-child(3) > div{
-    background-color: #1e3799;
-}
-.dashMane > section > div:nth-child(4) > div{
-    background-color: #38ada9;
-}
-.table>:not(:first-child) {
-    border-top: 2px solid rgba(0, 0, 0, 0.2) !important;
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 220px;
+    border-radius: 5px;
+    margin: 0;
+    padding-top: 80px;
+    background: rgba(255, 255, 255, 1);
 }
 
-table thead th{
+#template > section {
+    padding: 20px;
+}
+
+#template h1 {
+    text-align: start;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.mytext {
+    height: fit-content;
+}
+
+.dashMane > section > div > h2 {
+    color: #485460;
+}
+
+.dashMane > section > div:first-child > div {
+    background-color: #ff3838;
+}
+
+.dashMane > section > div:nth-child(2) > div {
+    background-color: #2e86de;
+}
+
+.dashMane > section > div:nth-child(3) > div {
+    background-color: #1e3799;
+}
+
+.dashMane > section > div:nth-child(4) > div {
+    background-color: #38ada9;
+}
+
+.table > :not(:first-child) {
+    border-top: 2px solid rgba(0, 0, 0, 0.8) !important;
+}
+
+table thead th {
     text-align: center;
-    background: rgba(0, 0, 0, 0.06) !important;
+    background: rgba(0, 0, 0, 0.5) !important;
     text-transform: capitalize;
     letter-spacing: 1px;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     font-family: 'Roboto', sans-serif;
     cursor: default;
+
 }
-table tbody tr td{
+
+table tbody tr{
+    background: rgba(0, 0, 0, 0.03) !important;
+}
+
+table tbody tr td {
     text-align: center;
     letter-spacing: 1px;
     color: rgba(0, 0, 0, 0.75);
     text-transform: capitalize;
 }
-#orderDetailTbl tbody tr td div, #recentOrderTbl tbody tr td div  {
+
+#orderDetailTbl tbody tr td div, #recentOrderTbl tbody tr td div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -347,33 +372,40 @@ table tbody tr td{
     text-decoration: none;
     background: #00d2d3;
 }
+
 #recentOrderTbl tbody tr td div {
     background: red;
     cursor: pointer;
 }
-#orderDetailTbl tbody tr td:last-child, #recentOrderTbl tbody tr td:last-child{
+
+#orderDetailTbl tbody tr td:last-child, #recentOrderTbl tbody tr td:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#orderDetailTbl tbody tr td{
+
+#orderDetailTbl tbody tr td {
     cursor: default !important;
 }
-#customerTbl tbody tr, #itemTbl tbody tr, #orderDetailTbl tbody tr{
+
+#customerTbl tbody tr, #itemTbl tbody tr, #orderDetailTbl tbody tr {
     cursor: pointer !important;
 }
 
-table tbody tr td, table tbody tr{
+table tbody tr td, table tbody tr {
     transition: ease-in-out 0.5s !important;
- }
-table tbody tr:hover{
+}
+
+table tbody tr:hover {
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
 }
-table tbody tr:hover td{
+
+table tbody tr:hover td {
     color: rgba(0, 0, 0, 1);
     transform: scale(1.05);
 }
-.filter{
+
+.filter {
     width: 100%;
     min-height: 100vh;
     position: fixed;
@@ -390,19 +422,22 @@ table tbody tr:hover td{
     backdrop-filter: blur(0.2px);
     opacity: 0;
 }
-.filter .all-d{
+
+.filter .all-d {
     width: 1000px;
     background: rgba(255, 255, 255, 1);
     padding: 20px;
     border-radius: 20px;
 }
-.filter .all-d .details{
+
+.filter .all-d .details {
     height: fit-content;
     margin: 0;
     padding: 20px 0;
 
 
 }
+
 @media all and (max-width: 910px) {
     aside {
         display: none;
@@ -430,7 +465,8 @@ table tbody tr:hover td{
     #divQty {
         width: 30%;
     }
-    #template{
+
+    #template {
         width: 100%;
     }
 }

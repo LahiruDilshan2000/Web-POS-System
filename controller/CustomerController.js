@@ -17,11 +17,11 @@ export class CustomerController {
             this.handleSearchCustomer();
         });
         $('#cusSearch').on('keyup', () => {
-
+            this.handleSearchCustomer();
         });
         this.handleLReloadCustomerDetails();
         // this.handleSaveCustomer.bind(this);
-        this.handleLoadCustomer();
+        this.handleLoadCustomer(getAllDB("DATA"));
         this.handleTableClickEvent();
     }
 
@@ -41,7 +41,7 @@ export class CustomerController {
         }
         saveCustomerDB(new Customer($('#id').val(), $('#name').val(), $('#address').val(), $('#tel').val()));
 
-        this.handleLoadCustomer();
+        this.handleLoadCustomer(getAllDB("DATA"));
 
 
     }
@@ -50,21 +50,22 @@ export class CustomerController {
 
         updateCustomerDB(new Customer($('#id').val(), $('#name').val(), $('#address').val(), $('#tel').val()));
 
-        this.handleLoadCustomer();
+        this.handleLoadCustomer(getAllDB("DATA"));
     }
 
     handleDeleteCustomer() {
 
         deleteCustomerDB(new Customer($('#id').val(), $('#name').val(), $('#address').val(), $('#tel').val()));
 
-        this.handleLoadCustomer();
+        this.handleLoadCustomer(getAllDB("DATA"));
     }
 
-    handleLoadCustomer() {
+    handleLoadCustomer(array) {
+
 
         $('#customerTbl tbody tr td').remove();
 
-        getAllDB("DATA").map((value) => {
+        array.map((value) => {
             var row = "<tr>" +
                 "<td>" + value._id + "</td>" +
                 "<td>" + value._name + "</td>" +
@@ -116,6 +117,10 @@ export class CustomerController {
 
     handleSearchCustomer() {
 
+        if (!$('#cusSearch').val()){
+            this.handleLoadCustomer(getAllDB("DATA"));
+            return;
+        }
         let array = [];
         let text = $('#cusSearch').val().toLowerCase();
 
@@ -125,36 +130,19 @@ export class CustomerController {
                 value._name.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
                     value._address.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
                         value._contact.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
-                            this.handleSearchCustomerLoad(array);
+                            undefined;
         });
+        if (array) this.handleLoadCustomer(array);
     }
-
-    handleSearchCustomerLoad(array) {
-
-        if (array) {
-            $('#customerTbl tbody tr td').remove();
-
-            array.map((value) => {
-                var row = "<tr>" +
-                    "<td>" + value._id + "</td>" +
-                    "<td>" + value._name + "</td>" +
-                    "<td>" + value._address + "</td>" +
-                    "<td>" + value._contact + "</td>" +
-                    "</tr>";
-
-                $('#customerTbl tbody').append(row);
-            });
-        }
-    }
-
 
     handleLReloadCustomerDetails() {
 
         $(document).on('click', (event) => {
-            console.log($('#cusSearch').val());
-            if(!$('#cusSearch').val()) this.handleLoadCustomer();
+            if (event.target.className === 'form-control me-2 was-validated search')
+                setTimeout(() => {
+                    if (!$('#cusSearch').val()) this.handleLoadCustomer(getAllDB("DATA"));
+                });
         });
-
     }
 }
 

@@ -5,17 +5,30 @@ export class RecentOrderDetailsController{
     constructor() {
 
         $('.filter').on('click', (event) => {
-            if(event.target.className === 'filter'){
-                $('.filter').css({opacity : '0', right : '-200vw'});
-            }
+            this.handleFilterClickEvent(event);
         });
-        this.handleLoadTable();
+        $('#rOrderSearchBtn').on('click', () => {
+            this.handleSearchRecentOrder();
+        });
+        $('#rOrderSearch').on('keyup', () => {
+            this.handleSearchRecentOrder();
+        });
+        this.handleLReloadRecentOrderDetails();
+        this.handleLoadTable(getAllDB("ORDER"));
         this.handleTableButtonClick();
     }
 
-    handleLoadTable(){
+    handleFilterClickEvent(event){
 
-        getAllDB("ORDER").map(value => {
+        if(event.target.className === 'filter'){
+            $('.filter').css({opacity : '0', right : '-200vw'});
+        }
+    }
+
+    handleLoadTable(array){
+
+        $('#recentOrderTbl tbody tr').remove();
+        array.map(value => {
 
             let count = value._itemArray.length;
             let total = 0;
@@ -70,6 +83,45 @@ export class RecentOrderDetailsController{
                 $('.filter').css({opacity : '1', right : '0'});
             }
             return;
+        });
+    }
+
+    handleSearchRecentOrder(){
+
+        if (!$('#rOrderSearch').val()){
+            this.handleLoadTable(getAllDB("ORDER"));
+            return;
+        }
+        let array = [];
+        let text = $('#rOrderSearch').val().toLowerCase();
+
+        getAllDB("ORDER").map(value => {
+
+            value._orderId.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                value._customer._id.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                    value._customer._name.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                      this.handleGetTotal(value._itemArray).indexOf(text) !== -1 ? array.push(value) :
+                          value._orderDate.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                            undefined;
+        });
+        if (array)this.handleLoadTable(array);
+    }
+    handleGetTotal(array){
+        let total = 0;
+
+        array.map(value => {
+            total += value._total;
+        });
+        return total.toString();
+    }
+
+    handleLReloadRecentOrderDetails(){
+
+        $(document).on('click', (event) => {
+            if (event.target.className === 'form-control was-validated search')
+                setTimeout(() => {
+                    if (!$('#rOrderSearch').val()) this.handleLoadTable(getAllDB("ORDER"));
+                });
         });
     }
 }

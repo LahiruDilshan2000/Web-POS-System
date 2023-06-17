@@ -13,7 +13,6 @@
 <body>
 <header>
     <div>
-        <h1 id="header-h1"><i class="fa-solid fa-sleigh"></i> My POS System</h1>
         <div class="nav-button"></div>
     </div>
 </header>
@@ -28,25 +27,22 @@
         </ul>
     </nav>
     <aside>
+        <h1 id="nav-h1">ur<span>ld.</span></h1>
         <nav>
             <ul>
-                <li><a href="#" id="dash"><span><i
-                        class="fa-solid fa-house"></i>DashBoard</span></a></li>
-                <li><a href="#" id="cus"><span><i
-                        class="fa-solid fa-user"></i> Customer</span></a></li>
-                <li><a href="#" id="itm"><span><i
-                        class="fa-solid fa-layer-group"></i>Item</span></a></li>
-                <li><a href="#" id="or"><span><i
-                        class="fa-solid fa-bag-shopping"></i>Order</span></a></li>
-                <li><a href="#" id="ord"><span><i
-                        class="fa-solid fa-bars-staggered"></i>Order Details</span></a></li>
+                <li><a href="#" id="dash">DashBoard</a></li>
+                <li><a href="#" id="cus">Customer</a></li>
+                <li><a href="#" id="itm">Item</a></li>
+                <li><a href="#" id="or">Order</a></li>
+                <li><a href="#" id="ord">Order Details</a></li>
             </ul>
         </nav>
+        <h3 id="nav-h3">Version 1.100025<br>urLahiruDila63@gmail.com</h3>
     </aside>
-    <div id="template" class="template p-4">
+    <div id="template" class="template">
         <!--------------------Dashboard Form--------------------------------->
         <section class="dashMane">
-            <section class="dash row g-3 m-0">
+            <section class="dash row g-3 m-0" p-0>
                 <div class="col-md-3">
                     <div>
                         <h5>Today Orders</h5>
@@ -71,10 +67,10 @@
                         <h6 id="todayIncome">$ 187.5</h6>
                     </div>
                 </div>
-                <div class="col-12 p-0 ps-4">
-                    <h2>Recent Orders</h2>
+                <div class="col-12 p-0">
+                    <h1>Recent Orders</h1>
                 </div>
-                <div class="col-12 mt-0">
+                <div class="col-12 mt-0 p-0">
                     <table class="table" id="orderDetailTbl">
                         <thead>
                         <th>Order ID</th>
@@ -92,8 +88,8 @@
         <!--------------------Customer Form--------------------------------->
         <section class="cusMane">
             <h1>Customer Management</h1>
-            <form class="row g-3 myform">
-                <div class="col-md-6">
+            <form class="row g-3 myform ">
+                <div class="col-m-0">
                     <label class="form-label">Customer ID</label>
                     <input type="text" name="id" class="form-control" id="id" placeholder="C001">
                 </div>
@@ -317,8 +313,8 @@
                 <form class="d-flex" role="search">
                     <input class="form-control was-validated search" type="search" placeholder="Search"
                            aria-label="Search"
-                           id="recentOrderSearch">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                           id="rOrderSearch">
+                    <button class="btn btn-outline-success" type="button" id="rOrderSearchBtn">Search</button>
                 </form>
                 <div class="col-12 mt-4">
                     <table class="table" id="recentOrderTbl">

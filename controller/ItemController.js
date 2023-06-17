@@ -12,7 +12,14 @@ export class ItemController{
         $('#itmDeleteBtn').on('click', () => {
             this.handleValidation("Delete");
         });
-        this.handleLoadItem();
+        $('#itmSaveBtn').on('click', () => {
+            this.handleSearchItem();
+        });
+        $('#itmSearch').on('keyup', () => {
+            this.handleSearchItem();
+        });
+        this.handleLReloadItemDetails();
+        this.handleLoadItem(getAllDB("ITEM"));
         this.handleTableClickEvent();
     }
 
@@ -32,28 +39,28 @@ export class ItemController{
         }
         saveItemDB(new Item($('#itemCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
 
-        this.handleLoadItem();
+        this.handleLoadItem(getAllDB("ITEM"));
     }
 
     handleUpdateItem(){
 
         updateItemDB(new Item($('#itemCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
 
-        this.handleLoadItem();
+        this.handleLoadItem(getAllDB("ITEM"));
     }
 
     handleDeleteItem(){
 
         deleteItemDB(new Item($('#itemCode').val(), $('#itmDes').val(), $('#unitPrice').val(), $('#itmQty').val()));
 
-        this.handleLoadItem();
+        this.handleLoadItem(getAllDB("ITEM"));
     }
 
-    handleLoadItem(){
+    handleLoadItem(array){
 
         $('#itemTbl tbody tr td').remove();
 
-        getAllDB("ITEM").map((value) => {
+        array.map((value) => {
             var row = "<tr>" +
                 "<td>" + value._itemCode + "</td>" +
                 "<td>" + value._description + "</td>" +
@@ -101,6 +108,37 @@ export class ItemController{
             document.getElementById('itmCode').disabled = true;
             document.getElementById('itmUpdateBtn').disabled = false;
             document.getElementById('itmDeleteBtn').disabled = false;
+        });
+    }
+
+    handleSearchItem(){
+
+        if (!$('#itmSearch').val()){
+            this.handleLoadItem(getAllDB("ITEM"));
+            return;
+        }
+        let array = [];
+        let text = $('#itmSearch').val().toLowerCase();
+
+        getAllDB("ITEM").map(value => {
+
+            value._itemCode.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                value._description.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                    value._unitPrice.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                        value._qtyOnHand.toLowerCase().indexOf(text) !== -1 ? array.push(value) :
+                            undefined;
+        });
+        if (array) this.handleLoadItem(array);
+
+    }
+
+    handleLReloadItemDetails(){
+
+        $(document).on('click', (event) => {
+            if (event.target.className === 'form-control me-2 was-validated search')
+                setTimeout(() => {
+                    if (!$('#itmSearch').val()) this.handleLoadItem(getAllDB("ITEM"));
+                });
         });
     }
 }
