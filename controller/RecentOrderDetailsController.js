@@ -28,6 +28,7 @@ export class RecentOrderDetailsController{
     handleLoadTable(array){
 
         $('#recentOrderTbl tbody tr').remove();
+
         array.map(value => {
 
             let count = value._itemArray.length;
@@ -127,7 +128,7 @@ export class RecentOrderDetailsController{
 }
 
 export function handleRefreshTable(){
-    recentOrderDetailsController.handleLoadTable();
+    recentOrderDetailsController.handleLoadTable(getAllDB("ORDER"));
 }
 
 let recentOrderDetailsController = new RecentOrderDetailsController();

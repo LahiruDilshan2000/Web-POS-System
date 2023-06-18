@@ -2,6 +2,7 @@ import {Order} from "../models/Order.js";
 import {Order_Item} from "../models/Order_Item.js";
 import {getAllDB, saveOrderDB} from "../db/DB.js";
 import {handleRefreshAll} from "./DashBoardController.js";
+import {handleRefreshTable} from "./RecentOrderDetailsController.js";
 
 var order_item_arr = [];
 var cus;
@@ -27,7 +28,6 @@ export class OrderController {
         $('#orderDeleteBtn').on('click', () => {
             this.handleDeleteItem();
         });
-
         this.handleTableClickEvent();
         this.handDateTime();
         this.handleOrderID();
@@ -103,7 +103,7 @@ export class OrderController {
         $('#customerCmb :selected').text() === "Choose..." ? (alert("Please select the customer details !"), $('#customerCmb').focus(), $('#customerCmb').css({borderBottom: "2px solid red"})) :
             $('#itemCodeCmb :selected').text() === "Choose..." ? (alert("Please select the item details !"), $('#itemCodeCmb').focus(), $('#itemCodeCmb').css({borderBottom: "2px solid red"})) :
                 !/\d+$/.test($('#qty').val()) ? (alert("Qty invalid or empty !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
-                    $('#qty').val() > $('#qty_on_hand').text() ? (alert("Noo much qty left !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
+                    parseInt($('#qty').val()) > parseInt($('#qty_on_hand').text()) ? (alert("Noo much qty left www !"), $('#qty').focus(), $('#qty').css({borderBottom: "2px solid red"})) :
                         $('#orderAddBtn').text() === 'Add' ?  this.handleAddItem() : this.handleUpdateItem();
     }
 
@@ -209,6 +209,7 @@ export class OrderController {
         this.handleLoadTable();
         this.handleOrderID();
         handleRefreshAll();
+        handleRefreshTable();
     }
 
     handleLoadTable() {

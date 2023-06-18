@@ -487,7 +487,46 @@ table tbody tr:hover td {
     }
 }
 
-#tbl > tbody > tr:hover {
-    cursor: pointer;
-    background: darkgrey;
+@media all and (max-width: 550px) {
+
+    table thead th {
+        font-size: 0.7em;
+    }
+
+    table tbody tr td {
+        font-size: 0.7em;
+    }
+
+    #orderDetailTbl tbody tr td div, #recentOrderTbl tbody tr td div {
+        width: 40px !important;
+        height: 18px;
+    }
+
+    #template > section {
+        padding: 0px;
+    }
+    .col-md-3{
+        padding: 0 50px !important;
+    }
+}
+@media all and (max-width: 420px) {
+
+    table thead th {
+        font-size: 0.6em;
+    }
+
+    table tbody tr td {
+        font-size: 0.6em;
+    }
+    #template table{
+        padding: 0;
+    }
+    #orderDetailTbl tbody tr td div, #recentOrderTbl tbody tr td div {
+        width: 30px !important;
+        height: 15px;
+        border-radius: 10px;
+    }
+    .col-md-3{
+        padding: 0 30px !important;
+    }
 }

@@ -10,6 +10,8 @@ export class DashBoardController {
 
     handleTableLoad() {
 
+        $('#orderDetailTbl tbody tr').remove();
+
         getAllDB("ORDER").map(value => {
 
             let count = value._itemArray.length;
@@ -44,7 +46,6 @@ export class DashBoardController {
         getAllDB("ORDER").map(value => {
             if (value._orderDate === nowDate) {
                 for (let i = 0; i < value._itemArray.length; i++) {
-                    console.log(value._itemArray[i]._total);
                     todayIncome += parseInt(value._itemArray[i]._total)
                 }
                 count++;
