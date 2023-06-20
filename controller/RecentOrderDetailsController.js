@@ -21,7 +21,8 @@ export class RecentOrderDetailsController{
     handleFilterClickEvent(event){
 
         if(event.target.className === 'filter'){
-            $('.filter').css({opacity : '0', right : '-200vw'});
+            // $('.filter').css({opacity : '0', right : '-200vw'});
+            $('.filter').css({opacity : '0', zIndex : '-1'});
         }
     }
 
@@ -81,7 +82,8 @@ export class RecentOrderDetailsController{
 
                     $('#recentTbl tbody').prepend(row);
                 });
-                $('.filter').css({opacity : '1', right : '0'});
+                // $('.filter').css({opacity : '1', right : '0'});
+                $('.filter').css({opacity : '1', zIndex : '5000'});
             }
             return;
         });
